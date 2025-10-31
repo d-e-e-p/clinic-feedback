@@ -32,8 +32,16 @@ function updateTimer() {
   }
 }
 
-const apiKey =
-  "eyJzb3VsSWQiOiJkZG5hLWJhci1vZi1zb2FwNTY4Zi0tc3VydmV5MSIsImF1dGhTZXJ2ZXIiOiJodHRwczovL2RoLnNvdWxtYWNoaW5lcy5jbG91ZC9hcGkvand0IiwiYXV0aFRva2VuIjoiYXBpa2V5X3YxXzhkMjFmNTgxLTA4Y2UtNDJjNC1hYzkzLTZjZTUxMzFhNmRlOSJ9";
+const langCode = document.documentElement.lang; // Get from <html lang>
+const apiKey = translationsPage[langCode]?.apiKey;
+
+// Add error handling
+if (!apiKey) {
+    console.error('No API key found for language:', langCode);
+    document.getElementById('status').textContent = 
+        'Configuration error - please try again';
+    throw new Error('Missing API key for language');
+}
 
 async function disconnectSession() {
   console.log("→ Disconnecting session...");
@@ -55,7 +63,8 @@ async function connect() {
   console.log("→ Connect button clicked");
   console.log("→ API Key:", apiKey.substring(0, 20) + "...");
 
-  document.getElementById("status").textContent = "Connecting...";
+  document.getElementById("status").textContent = 
+    translationsPage[langCode].statusMessages.connecting;
 
   const videoEl = document.getElementById("sm-video");
   console.log("→ Video element:", videoEl);
@@ -76,7 +85,7 @@ async function connect() {
     console.log("✓ Connected! Session ID:", sessionId);
 
     document.getElementById("status").textContent =
-      "Connected! Starting video...";
+      translationsPage[langCode].statusMessages.connected;
 
     console.log("→ Starting video...");
     const videoState = await scene.startVideo();

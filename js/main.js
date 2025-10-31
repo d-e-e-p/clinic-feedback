@@ -8,8 +8,8 @@ let initialSelectedKey = "english"; // Force English to be selected initially
 
 // 1. Inject language options into the container
 function renderLanguageOptions() {
-  Object.keys(languageConfig).forEach((key) => {
-    const config = languageConfig[key];
+  Object.keys(translationsMain).forEach((key) => {
+    const config = translationsMain[key];
     const div = document.createElement("div");
 
     // Use flex to align text and emoji
@@ -39,7 +39,7 @@ function renderLanguageOptions() {
 
 // Helper function to handle all selection/styling logic
 function simulateSelection(targetElement, key) {
-  selectedConfig = languageConfig[key];
+  selectedConfig = translationsMain[key];
 
   // Deselect and reset all options
   document.querySelectorAll(".language-option").forEach((el) => {
