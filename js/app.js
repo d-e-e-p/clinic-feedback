@@ -60,6 +60,7 @@ async function connect() {
 
   document.getElementById("status").textContent = "Connecting...";
 
+  console.log("→ loading video element...");
   const videoEl = document.getElementById("sm-video");
   console.log("→ Video element:", videoEl);
 
