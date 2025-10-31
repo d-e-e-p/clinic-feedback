@@ -15,9 +15,32 @@
  /* Language selector positioning */
  #languageContainer {
      position: relative;
-     z-index: 1000;
+     z-index: 1001; /* Higher than video */
+     background: rgba(255, 255, 255, 0.9);
+     border-radius: 16px;
+     padding: 2rem;
  }
  #startButton {
      position: relative;
-     z-index: 1000;
+     z-index: 1001; /* Same as language container */
+ }
+
+ /* Video styling */
+ #sm-video {
+     position: fixed;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     object-fit: cover;
+     z-index: 1;
+     background: #000;
+     display: none;
+ }
+
+ /* Session controls positioning */
+ #timer-display, 
+ #controls,
+ #timer-position {
+     z-index: 1002; /* Above language selection when active */
  }

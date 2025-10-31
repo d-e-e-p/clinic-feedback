@@ -85,11 +85,9 @@ container.addEventListener("click", (event) => {
 
 startButton.addEventListener("click", () => {
   if (selectedConfig) {
-    // Hide language selection
-    container.style.display = 'none';
-    startButton.style.display = 'none';
-    pageTitle.style.display = 'none';
-    instructions.style.display = 'none';
+    // Keep language UI visible but faded
+    container.style.opacity = '0.2';
+    startButton.style.visibility = 'hidden';
     
     // Set language for API key
     document.documentElement.lang = selectedConfig.isoCode || selectedConfig.code;

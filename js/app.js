@@ -5,7 +5,7 @@ let timerInterval;
 let sessionStartTime;
 const SESSION_DURATION = 3 * 60 * 1000; // 3 minutes in milliseconds
 const REDIRECT_DELAY_MS = 4000;
-const REDIRECT_URL = "index.html";
+// No redirect URL needed for single page app
 
 function updateTimer() {
   const elapsed = Date.now() - sessionStartTime;
@@ -109,10 +109,17 @@ function showThankYouAndReset() {
     document.getElementById('timer-display').style.display = 'none';
     document.getElementById('timer-position').style.display = 'none';
     document.getElementById('controls').style.display = 'none';
-    document.getElementById('languageContainer').style.display = 'block';
-    document.getElementById('startButton').style.display = 'block';
+    
+    // Fade back to language selection
+    document.getElementById('languageContainer').style.opacity = '1';
+    document.getElementById('startButton').style.visibility = 'visible';
     document.getElementById('pageTitle').style.display = 'block';
     document.getElementById('instructions').style.display = 'block';
+    
+    // Reset video element
+    const videoEl = document.getElementById('sm-video');
+    videoEl.srcObject = null;
+    if (videoEl.src) URL.revokeObjectURL(videoEl.src);
   }, REDIRECT_DELAY_MS);
 }
 
