@@ -65,10 +65,10 @@ button {
 }
 #progress-bar-container {
     width: 100%;
-    height: 30px; /* Thicker bar */
-    background-color: rgba(224, 224, 224, 0.8); /* Semi-transparent */
+    height: 8px; /* Smaller height */
+    background-color: rgba(255, 255, 255, 0.3); /* Lighter background */
     border-radius: 5px;
-    margin-top: 10px;
+    margin-top: 0; /* Remove extra spacing */
     overflow: hidden;
     position: relative;
 }
@@ -78,15 +78,25 @@ button {
     background-color: #4CAF50; /* Green */
     transition: width 0.1s linear, background-color 0.3s ease;
 }
+
+/* New Timer Position */
+#timer-position {
+    position: fixed;
+    bottom: 80px; /* Above disconnect button */
+    right: 20px;
+    z-index: 3;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 8px 16px;
+    border-radius: 4px;
+}
+
 #timer-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 20px; /* Larger text */
-    font-weight: bold;
+    font-size: 24px;
     color: white;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Better contrast */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    /* Remove absolute positioning from previous styles */
+    position: static;
+    transform: none;
 }
 
 /* Controls positioning */
