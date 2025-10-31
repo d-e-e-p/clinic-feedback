@@ -3,7 +3,7 @@ console.log("=== APP.JS LOADED ===");
 let scene;
 let timerInterval;
 let sessionStartTime;
-const SESSION_DURATION = 0.2 * 60 * 1000; // 3 minutes in milliseconds
+const SESSION_DURATION = 3 * 60 * 1000; // 3 minutes in milliseconds
 const REDIRECT_DELAY_MS = 4000;
 const REDIRECT_URL = "index.html";
 
@@ -82,8 +82,7 @@ async function connect() {
     const videoState = await scene.startVideo();
     console.log("✓ Video started:", videoState);
 
-    document.getElementById("status").textContent =
-      "Session active - 3 minutes remaining";
+    document.getElementById("status").textContent = "Session active";
 
     // Start the timer
     sessionStartTime = Date.now();

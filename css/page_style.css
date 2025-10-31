@@ -1,15 +1,19 @@
 body {
     font-family: Arial, sans-serif;
-    max-width: 1080px;
-    margin: 20px auto;
-    padding: 20px;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Prevent scrolling */
 }
 #sm-video {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    max-width: 800px;
-    height: 600px;
+    height: 100%;
+    object-fit: cover; /* Ensure video fills screen */
+    z-index: 1; /* Base layer */
     background: #000;
-    margin: 20px 0;
 }
 button {
     padding: 12px 24px;
@@ -32,8 +36,11 @@ button {
     display: none !important; 
 }
 #disconnect-button {
-    background: #ff9800;
+    background: #ff4444;
     color: white;
+    padding: 15px 30px;
+    font-size: 18px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 #reset-button {
     background: #f44336;
@@ -47,14 +54,19 @@ button {
 }
 /* --- Progress Bar Styles --- */
 #timer-display {
-    text-align: center;
-    margin: 20px auto;
+    position: fixed;
+    top: 20px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    z-index: 3; /* Above video */
     max-width: 800px;
+    text-align: center;
 }
 #progress-bar-container {
     width: 100%;
-    height: 25px;
-    background-color: #e0e0e0;
+    height: 30px; /* Thicker bar */
+    background-color: rgba(224, 224, 224, 0.8); /* Semi-transparent */
     border-radius: 5px;
     margin-top: 10px;
     overflow: hidden;
@@ -71,10 +83,20 @@ button {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 16px;
+    font-size: 20px; /* Larger text */
     font-weight: bold;
-    color: #333;
-    mix-blend-mode: overlay; /* Helps text stand out against the bar */
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Better contrast */
+}
+
+/* Controls positioning */
+#controls {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3; /* Same as timer */
+    text-align: center;
 }
 
 /* Thank You Modal/Screen styles */
