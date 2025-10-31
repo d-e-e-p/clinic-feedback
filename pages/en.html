@@ -154,7 +154,7 @@
         // Set the timer duration in milliseconds (3 minutes)
         //const SESSION_DURATION = 3 * 60 * 1000; 
         const SESSION_DURATION = .2 * 60 * 1000; 
-        const apiKey = "eyJzb3VsSWQiOiJkZG5hLWJhci1vZi1zb2FwNTY4Zi0tc3VydmV5MSIsImF1dGhTZXJ2ZXIiOiJodHRwczovL2RoLnNvdWxtYWNoaW5lcy5jbG91ZC9hcGkvand0IiwiYXV0aFRva2VuIjoiYXBpa2V5X3YxXzhkMjFmNTgxLTA4Y2NlLTRjNC1hYzkzLTZjZTUxMzFhNmRlOSJ9";
+        const apiKey = "eyJzb3VsSWQiOiJkZG5hLWJhci1vZi1zb2FwNTY4Zi0tc3VydmV5MSIsImF1dGhTZXJ2ZXIiOiJodHRwczovL2RoLnNvdWxtYWNoaW5lcy5jbG91ZC9hcGkvand0IiwiYXV0aFRva2VuIjoiYXBpa2V5X3YxXzhkMjFmNTgxLTA4Y2UtNDJjNC1hYzkzLTZjZTUxMzFhNmRlOSJ9";
         
         // --- Timer UI Elements ---
         const timerText = document.getElementById('timer-text');
@@ -252,10 +252,24 @@
                     requiredMediaDevices: { microphone: true, camera: false }
                 });
                 
-                const sessionId = await scene.connect();
-                await scene.startVideo();
+                console.log('✓ Scene created:', scene);
                 
-                statusElement.textContent = 'Session active - 3 minutes remaining';
+                const sessionId = await scene.connect();
+                console.log('✓ Connected! Session ID:', sessionId);
+                
+                statusElement.textContent = 'Connected! Starting video...';
+                
+                console.log('→ Starting video...');
+                const videoState = await scene.startVideo();
+                console.log('✓ Video started:', videoState);
+                
+                statusElement.textContent = 'Video started! Starting session...';
+                
+                //console.log('→ Starting session...');
+                //await scene.startSession();
+                //console.log('✓ Session started');
+                
+                statusElement.textContent = 'Session active';
                 endButton.disabled = false; // Enable end button
 
                 // Start the timer
