@@ -32,10 +32,10 @@ const apiKey = translationsPage[langCode]?.apiKey;
 
 // Add error handling
 if (!apiKey) {
-    console.error('No API key found for language:', langCode);
-    document.getElementById('status').textContent = 
-        'Configuration error - please try again';
-    throw new Error('Missing API key for language');
+  console.error("No API key found for language:", langCode);
+  document.getElementById("status").textContent =
+    "Configuration error - please try again";
+  throw new Error("Missing API key for language");
 }
 
 async function disconnectSession() {
@@ -58,8 +58,7 @@ async function connect() {
   console.log("→ Connect button clicked");
   console.log("→ API Key:", apiKey.substring(0, 20) + "...");
 
-  document.getElementById("status").textContent = 
-    translationsPage[langCode]?.statusMessages?.connecting || "Connecting...";
+  document.getElementById("status").textContent = "Connecting...";
 
   const videoEl = document.getElementById("sm-video");
   console.log("→ Video element:", videoEl);
@@ -79,8 +78,7 @@ async function connect() {
     const sessionId = await scene.connect();
     console.log("✓ Connected! Session ID:", sessionId);
 
-    document.getElementById("status").textContent =
-      translationsPage[langCode]?.statusMessages?.connected || "Connection established!";
+    document.getElementById("status").textContent = "Connection established!";
 
     console.log("→ Starting video...");
     const videoState = await scene.startVideo();
@@ -95,8 +93,7 @@ async function connect() {
     updateTimer(); // Initial update
   } catch (error) {
     console.error("✗ Error:", error);
-    document.getElementById("status").textContent = 
-      translationsPage[langCode]?.statusMessages?.error || "Error: " + error.message;
+    document.getElementById("status").textContent = "Error: " + error.message;
   }
 }
 
@@ -104,20 +101,20 @@ function showThankYouAndReset() {
   document.getElementById("thank-you-screen").style.display = "flex";
   setTimeout(() => {
     // Reset UI
-    document.getElementById('sm-video').style.display = 'none';
-    document.getElementById('thank-you-screen').style.display = 'none';
-    document.getElementById('timer-display').style.display = 'none';
-    document.getElementById('timer-position').style.display = 'none';
-    document.getElementById('controls').style.display = 'none';
-    
+    document.getElementById("sm-video").style.display = "none";
+    document.getElementById("thank-you-screen").style.display = "none";
+    document.getElementById("timer-display").style.display = "none";
+    document.getElementById("timer-position").style.display = "none";
+    document.getElementById("controls").style.display = "none";
+
     // Fade back to language selection
-    document.getElementById('languageContainer').style.opacity = '1';
-    document.getElementById('startButton').style.visibility = 'visible';
-    document.getElementById('pageTitle').style.display = 'block';
-    document.getElementById('instructions').style.display = 'block';
-    
+    document.getElementById("languageContainer").style.opacity = "1";
+    document.getElementById("startButton").style.visibility = "visible";
+    document.getElementById("pageTitle").style.display = "block";
+    document.getElementById("instructions").style.display = "block";
+
     // Reset video element
-    const videoEl = document.getElementById('sm-video');
+    const videoEl = document.getElementById("sm-video");
     videoEl.srcObject = null;
     if (videoEl.src) URL.revokeObjectURL(videoEl.src);
   }, REDIRECT_DELAY_MS);
