@@ -11,32 +11,29 @@
     
     <div id="status">Initializing...</div>
     
-    <!-- Timer Display -->
-    <div id="timer-display">
-        <h3>Session Time Remaining</h3>
-        <div id="timer-container">
-            <svg id="timer-svg" width="200" height="200" viewBox="0 0 200 200">
-                <!-- Outer circle -->
-                <circle cx="100" cy="100" r="90" fill="none" stroke="#e0e0e0" stroke-width="8"/>
-                <!-- Progress circle -->
-                <circle id="timer-circle" cx="100" cy="100" r="90" 
-                        stroke-dasharray="565.48" stroke-dashoffset="0"/>
-                <!-- Timer hand -->
-                <line id="timer-hand" x1="100" y1="100" x2="100" y2="20" 
-                      stroke="#333" stroke-width="3" stroke-linecap="round"/>
-                <!-- Center dot -->
-                <circle cx="100" cy="100" r="6" fill="#333"/>
-            </svg>
-            <div id="timer-text">3:00</div>
-        </div>
-    </div>
     
     <video id="sm-video" autoplay playsinline></video>
-    
+
+       <!-- Timer Display (Below the video, using a bar) -->
+        <div id="timer-display">
+            <h2>Time Remaining</h2>
+            <div id="progress-bar-container">
+                <div id="progress-bar"></div>
+                <div id="timer-text">3:00</div>
+            </div>
+        </div>
+   
+
     <div>
         <button id="connect-button" disabled>Connect</button>
         <button id="disconnect-button">End Session</button>
         <button id="reset-button">Reset</button>
+    </div>
+
+       <!-- Thank You Screen -->
+    <div id="thank-you-screen">
+        <h2>Thank You for Your Feedback!</h2>
+        <p>This session has ended. Redirecting to the main page...</p>
     </div>
 
     <!-- Load Soul Machines SDK -->
