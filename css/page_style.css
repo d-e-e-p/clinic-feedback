@@ -1,0 +1,79 @@
+body {
+    font-family: Arial, sans-serif;
+    max-width: 1080px;
+    margin: 20px auto;
+    padding: 20px;
+}
+#sm-video {
+    width: 100%;
+    max-width: 800px;
+    height: 600px;
+    background: #000;
+    margin: 20px 0;
+}
+button {
+    padding: 12px 24px;
+    margin: 10px 5px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+}
+#connect-button {
+    background: #4CAF50;
+    color: white;
+}
+#connect-button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+#disconnect-button {
+    background: #ff9800;
+    color: white;
+}
+#reset-button {
+    background: #f44336;
+    color: white;
+}
+#status {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+    background: #f0f0f0;
+}
+
+/* Timer styles */
+#timer-display {
+    display: none;
+    text-align: center;
+    margin: 20px 0;
+}
+#timer-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+}
+#timer-svg {
+    transform: rotate(-90deg);
+}
+#timer-circle {
+    fill: none;
+    stroke: #4CAF50;
+    stroke-width: 8;
+    stroke-linecap: round;
+    transition: stroke 0.3s ease;
+}
+#timer-hand {
+    transition: transform 0.1s linear;
+    transform-origin: 100px 100px;
+}
+#timer-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 32px;
+    font-weight: bold;
+    color: #333;
+}

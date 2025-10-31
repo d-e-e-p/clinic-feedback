@@ -1,108 +1,128 @@
-let scene;
-let apiKey;
+console.log('=== APP.JS LOADED ===');
 
-async function loadConfig() {
+let scene;
+let timerInterval;
+let sessionStartTime;
+const SESSION_DURATION = 3 * 60 * 1000; // 3 minutes in milliseconds
+
+const apiKey = "eyJzb3VsSWQiOiJkZG5hLWJhci1vZi1zb2FwNTY4Zi0tc3VydmV5MSIsImF1dGhTZXJ2ZXIiOiJodHRwczovL2RoLnNvdWxtYWNoaW5lcy5jbG91ZC9hcGkvand0IiwiYXV0aFRva2VuIjoiYXBpa2V5X3YxXzhkMjFmNTgxLTA4Y2UtNDJjNC1hYzkzLTZjZTUxMzFhNmRlOSJ9";
+
+function updateTimer() {
+  const elapsed = Date.now() - sessionStartTime;
+  const remaining = Math.max(0, SESSION_DURATION - elapsed);
+  
+  const minutes = Math.floor(remaining / 60000);
+  const seconds = Math.floor((remaining % 60000) / 1000);
+  
+  // Update digital display
+  document.getElementById('timer-text').textContent = 
+    `${minutes}:${seconds.toString().padStart(2, '0')}`;
+  
+  // Update analog clock hand (360 degrees = 3 minutes)
+  const percentage = remaining / SESSION_DURATION;
+  const degrees = percentage * 360;
+  document.getElementById('timer-hand').style.transform = 
+    `rotate(${degrees - 90}deg)`; // -90 to start at top
+  
+  // Change color as time runs out
+  const timerCircle = document.getElementById('timer-circle');
+  if (remaining < 60000) { // Last minute
+    timerCircle.style.stroke = '#ff4444';
+  } else if (remaining < 120000) { // Last 2 minutes
+    timerCircle.style.stroke = '#ffaa00';
+  }
+  
+  // Auto-disconnect when time runs out
+  if (remaining === 0) {
+    clearInterval(timerInterval);
+    disconnectSession();
+  }
+}
+
+async function disconnectSession() {
+  console.log('→ Disconnecting session...');
+  
   try {
-    // Temporary - for testing only
-    apiKey = "eyJzb3VsSWQiOiJkZG5hLWJhci1vZi1zb2FwNTY4Zi0tc3VydmV5MSIsImF1dGhTZXJ2ZXIiOiJodHRwczovL2RoLnNvdWxtYWNoaW5lcy5jbG91ZC9hcGkvand0IiwiYXV0aFRva2VuIjoiYXBpa2V5X3YxXzhkMjFmNTgxLTA4Y2UtNDJjNC1hYzkzLTZjZTUxMzFhNmRlOSJ9";
-    
-    console.log('✓ API Key loaded');
-    document.getElementById('status').textContent = 'Ready to connect';
-    document.getElementById('connect-button').disabled = false;
+    if (scene) {
+      await scene.disconnect();
+      console.log('✓ Session disconnected');
+      document.getElementById('status').textContent = 'Session ended (time limit reached)';
+      document.getElementById('connect-button').disabled = false;
+      document.getElementById('timer-display').style.display = 'none';
+    }
   } catch (error) {
-    console.error('✗ Failed to load configuration:', error);
-    document.getElementById('status').textContent = 'Error: Could not load configuration';
+    console.error('✗ Error disconnecting:', error);
   }
 }
 
 async function connect() {
-  if (!apiKey) {
-    console.error('✗ API key not loaded');
-    return;
-  }
-
-  console.log('→ Starting connection...');
+  console.log('→ Connect button clicked');
+  console.log('→ API Key:', apiKey.substring(0, 20) + '...');
+  
   document.getElementById('status').textContent = 'Connecting...';
   document.getElementById('connect-button').disabled = true;
 
   const videoEl = document.getElementById("sm-video");
-  
-  console.log('→ Creating Scene with logging enabled...');
+  console.log('→ Video element:', videoEl);
   
   try {
+    console.log('→ Creating Scene...');
     scene = new smwebsdk.Scene({
       apiKey: apiKey,
       videoElement: videoEl,
       requestedMediaDevices: { microphone: true, camera: false },
-      requiredMediaDevices: { microphone: true, camera: false },
-      // Enable verbose logging
-      loggingConfig: {
-        session: { minLogLevel: 'debug' },
-        webRtc: { minLogLevel: 'debug' }
-      }
+      requiredMediaDevices: { microphone: true, camera: false }
     });
     
-    console.log('✓ Scene created');
+    console.log('✓ Scene created:', scene);
     
-    // Add event listeners for debugging
-    scene.connectionState.onConnectionStateUpdated.addListener((state) => {
-      console.log('Connection state:', state);
-    });
+    console.log('→ Connecting to session...');
+    const sessionId = await scene.connect();
+    console.log('✓ Connected! Session ID:', sessionId);
     
-    await scene.connect()
-      .then((sessionId) => onConnectionSuccess(sessionId))
-      .catch((error) => onConnectionError(error));
-      
+    document.getElementById('status').textContent = 'Connected! Starting video...';
+    
+    console.log('→ Starting video...');
+    const videoState = await scene.startVideo();
+    console.log('✓ Video started:', videoState);
+    
+    document.getElementById('status').textContent = 'Session active - 3 minutes remaining';
+    
+    // Start the timer
+    sessionStartTime = Date.now();
+    document.getElementById('timer-display').style.display = 'block';
+    timerInterval = setInterval(updateTimer, 100); // Update every 100ms for smooth animation
+    updateTimer(); // Initial update
+    
   } catch (error) {
-    console.error('✗ Failed to create scene:', error);
-    onConnectionError(error);
+    console.error('✗ Error:', error);
+    document.getElementById('status').textContent = 'Error: ' + error.message;
+    document.getElementById('connect-button').disabled = false;
   }
 }
 
-function onConnectionSuccess(sessionId) {
-  console.log("✓ Connected! Session ID:", sessionId);
-  document.getElementById('status').textContent = 'Connected! Starting video...';
-  
-  scene.startVideo()
-    .then((videoState) => {
-      console.log("✓ Video started, state:", videoState);
-      document.getElementById('status').textContent = 'Video started';
-    })
-    .catch((error) => {
-      console.error("✗ Could not start video:", error);
-      document.getElementById('status').textContent = 'Error starting video';
-    });
-}
-
-function onConnectionError(error) {
-  console.error('✗ Connection error:', error);
-  console.error('Error name:', error.name);
-  console.error('Error message:', error.message);
-  
-  document.getElementById('connect-button').disabled = false;
-  
-  switch (error.name) {
-    case "noUserMedia":
-      console.warn("⚠ User blocked device access");
-      document.getElementById('status').textContent = 'Error: Microphone access required';
-      break;
-    case "noScene":
-    case "serverConnectionFailed":
-      console.warn("⚠ Server connection failed");
-      document.getElementById('status').textContent = 'Error: Server connection failed';
-      break;
-    default:
-      console.warn("⚠ Unhandled error:", error);
-      document.getElementById('status').textContent = 'Error: Connection failed';
-  }
+async function manualDisconnect() {
+  clearInterval(timerInterval);
+  await disconnectSession();
+  document.getElementById('status').textContent = 'Session ended (manual disconnect)';
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('=== PAGE LOADED ===');
-  console.log('smwebsdk available:', typeof smwebsdk !== 'undefined');
+  console.log('=== DOM READY ===');
+  console.log('Connect button:', document.getElementById('connect-button'));
+  console.log('Status div:', document.getElementById('status'));
+  console.log('Video element:', document.getElementById('sm-video'));
   
-  document.getElementById('connect-button').addEventListener('click', () => connect());
-  document.getElementById('reset-button').addEventListener('click', () => window.location.reload());
+  document.getElementById('connect-button').disabled = false;
+  document.getElementById('status').textContent = 'Ready to connect';
   
-  loadConfig();
+  document.getElementById('connect-button').addEventListener('click', connect);
+  document.getElementById('disconnect-button').addEventListener('click', manualDisconnect);
+  document.getElementById('reset-button').addEventListener('click', () => {
+    console.log('→ Resetting...');
+    clearInterval(timerInterval);
+    window.location.reload();
+  });
+  
+  console.log('✓ Event listeners attached');
 });

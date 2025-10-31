@@ -3,73 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clinic Feedback - Debug</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-        }
-        #sm-video {
-            width: 100%;
-            max-width: 640px;
-            height: 480px;
-            background: #000;
-            margin: 20px 0;
-        }
-        button {
-            padding: 12px 24px;
-            margin: 10px 5px;
-            font-size: 16px;
-            cursor: pointer;
-            border: none;
-            border-radius: 4px;
-        }
-        #connect-button {
-            background: #4CAF50;
-            color: white;
-        }
-        #connect-button:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-        }
-        #reset-button {
-            background: #f44336;
-            color: white;
-        }
-        #status {
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 4px;
-            background: #f0f0f0;
-        }
-    </style>
+    <title>Clinic Feedback</title>
+    <title>Clinic Feedback</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <h1>Clinic Feedback - Debug Mode</h1>
+    <header>
+        <h1 id="pageTitle"></h1>
+        <p id="instructions"></p>
+    </header>
     
-    <div id="status">Initializing...</div>
+    <div class="bubble-container" id="bubbleContainer"></div>
     
-    <video id="sm-video" autoplay playsinline></video>
-    
-    <div>
-        <button id="connect-button" disabled>Connect</button>
-        <button id="reset-button">Reset</button>
-    </div>
+    <button id="startButton"></button>
 
-    <!-- Load Soul Machines SDK -->
-    <script src="https://cdn.jsdelivr.net/npm/@soulmachines/smwebsdk/bundles/smwebsdk.min.js"></script>
-    
-    <!-- Load your app -->
-    <script src="js/app.js"></script>
-    
-    <script>
-        // Debug: Check if everything loaded
-        console.log('=== DEBUG INFO ===');
-        console.log('Page loaded at:', new Date().toISOString());
-        console.log('smwebsdk loaded:', typeof smwebsdk !== 'undefined');
-        console.log('Scene available:', typeof smwebsdk !== 'undefined' && typeof smwebsdk.Scene !== 'undefined');
-    </script>
+    <script src="js/config.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
