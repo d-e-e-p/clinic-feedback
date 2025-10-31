@@ -3,27 +3,33 @@ console.log("=== APP.JS LOADED ===");
 let scene;
 let timerInterval;
 let sessionStartTime;
-const SESSION_DURATION = 3 * 60 * 1000; // 3 minutes in milliseconds
+const SESSION_DURATION = 0.2 * 60 * 1000; // 3 minutes in milliseconds
+const REDIRECT_DELAY_MS = 4000;
+const REDIRECT_URL = "index.html";
 
 function updateTimer() {
-    const elapsed = Date.now() - sessionStartTime;
-    const remaining = SESSION_DURATION - elapsed;
-    const percentRemaining = (remaining / SESSION_DURATION) * 100;
+  const elapsed = Date.now() - sessionStartTime;
+  const remaining = SESSION_DURATION - elapsed;
+  const percentRemaining = (remaining / SESSION_DURATION) * 100;
 
-    // Update progress bar
-    document.getElementById('progress-bar').style.width = `${percentRemaining}%`;
-    
-    // Update timer text
-    const seconds = Math.ceil(remaining / 1000);
-    document.getElementById('timer-text').textContent = 
-        `${Math.floor(seconds/60)}:${String(seconds%60).padStart(2,'0')}`;
+  // Update progress bar
+  document.getElementById("progress-bar").style.width = `${percentRemaining}%`;
 
-    // End session when time runs out
-    if (remaining <= 0) {
-        clearInterval(timerInterval);
-        disconnectSession();
-        document.getElementById('thank-you-screen').style.display = 'flex';
-    }
+  // Update timer text
+  const seconds = Math.ceil(remaining / 1000);
+  document.getElementById("timer-text").textContent =
+    `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")}`;
+
+  // End session when time runs out
+  if (remaining <= 0) {
+    clearInterval(timerInterval);
+    disconnectSession().then(() => {
+      document.getElementById("thank-you-screen").style.display = "flex";
+      setTimeout(() => {
+        window.location.href = REDIRECT_URL;
+      }, REDIRECT_DELAY_MS);
+    });
+  }
 }
 
 const apiKey =
@@ -93,8 +99,10 @@ async function connect() {
 async function manualDisconnect() {
   clearInterval(timerInterval);
   await disconnectSession();
-  document.getElementById("status").textContent =
-    "Session ended (manual disconnect)";
+  document.getElementById("thank-you-screen").style.display = "flex";
+  setTimeout(() => {
+    window.location.href = REDIRECT_URL;
+  }, REDIRECT_DELAY_MS);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -111,4 +119,3 @@ document.addEventListener("DOMContentLoaded", () => {
   console.log("✓ Auto-connecting...");
   connect(); // Auto-initiate connection
 });
-
