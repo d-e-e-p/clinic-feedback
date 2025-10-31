@@ -71,22 +71,3 @@ const translationsPage = {
       "eyJzb3VsSWQiOiJkZG5hLWJhci1vZi1zb2FwNTY4Zi0tc3VydmV5MSIsImF1dGhTZXJ2ZXIiOiJodHRwczovL2RoLnNvdWxtYWNoaW5lcy5jbG91ZC9hcGkvand0IiwiYXV0aFRva2VuIjoiYXBpa2V5X3YxXzhkMjFmNTgxLTA4Y2UtNDJjNC1hYzkzLTZjZTUxMzFhNmRlOSJ9",
   },
 };
-const translationsPage = {
-  en: {
-    apiKey: "eyJzb3VsSWQ...", // Your English API key
-    statusMessages: {
-      connecting: "Connecting to specialist...",
-      connected: "Connected! Starting session...",
-      error: "Connection error - please try again",
-    },
-  },
-  es: {
-    apiKey: "eyJZhbHVl...", // Spanish API key
-    statusMessages: {
-      connecting: "Conectando con especialista...",
-      connected: "¡Conectado! Iniciando sesión...",
-      error: "Error de conexión - por favor intente nuevamente",
-    },
-  },
-  // Add other languages as needed
-};
