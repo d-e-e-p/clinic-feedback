@@ -265,9 +265,9 @@
                 
                 statusElement.textContent = 'Video started! Starting session...';
                 
-                //console.log('→ Starting session...');
-                //await scene.startSession();
-                //console.log('✓ Session started');
+                console.log('→ Starting session...');
+                await scene.startSession();
+                console.log('✓ Session started');
                 
                 statusElement.textContent = 'Session active';
                 endButton.disabled = false; // Enable end button
