@@ -22,10 +22,14 @@ button {
 #connect-button {
     background: #4CAF50;
     color: white;
+    display: none !important;
 }
 #connect-button:disabled {
     background: #ccc;
     cursor: not-allowed;
+}
+#reset-button { 
+    display: none !important; 
 }
 #disconnect-button {
     background: #ff9800;

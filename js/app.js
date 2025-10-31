@@ -5,6 +5,27 @@ let timerInterval;
 let sessionStartTime;
 const SESSION_DURATION = 3 * 60 * 1000; // 3 minutes in milliseconds
 
+function updateTimer() {
+    const elapsed = Date.now() - sessionStartTime;
+    const remaining = SESSION_DURATION - elapsed;
+    const percentRemaining = (remaining / SESSION_DURATION) * 100;
+
+    // Update progress bar
+    document.getElementById('progress-bar').style.width = `${percentRemaining}%`;
+    
+    // Update timer text
+    const seconds = Math.ceil(remaining / 1000);
+    document.getElementById('timer-text').textContent = 
+        `${Math.floor(seconds/60)}:${String(seconds%60).padStart(2,'0')}`;
+
+    // End session when time runs out
+    if (remaining <= 0) {
+        clearInterval(timerInterval);
+        disconnectSession();
+        document.getElementById('thank-you-screen').style.display = 'flex';
+    }
+}
+
 const apiKey =
   "eyJzb3VsSWQiOiJkZG5hLWJhci1vZi1zb2FwNTY4Zi0tc3VydmV5MSIsImF1dGhTZXJ2ZXIiOiJodHRwczovL2RoLnNvdWxtYWNoaW5lcy5jbG91ZC9hcGkvand0IiwiYXV0aFRva2VuIjoiYXBpa2V5X3YxXzhkMjFmNTgxLTA4Y2UtNDJjNC1hYzkzLTZjZTUxMzFhNmRlOSJ9";
 
@@ -17,7 +38,6 @@ async function disconnectSession() {
       console.log("✓ Session disconnected");
       document.getElementById("status").textContent =
         "Session ended (time limit reached)";
-      document.getElementById("connect-button").disabled = false;
       document.getElementById("timer-display").style.display = "none";
     }
   } catch (error) {
@@ -30,7 +50,6 @@ async function connect() {
   console.log("→ API Key:", apiKey.substring(0, 20) + "...");
 
   document.getElementById("status").textContent = "Connecting...";
-  document.getElementById("connect-button").disabled = true;
 
   const videoEl = document.getElementById("sm-video");
   console.log("→ Video element:", videoEl);
@@ -68,7 +87,6 @@ async function connect() {
   } catch (error) {
     console.error("✗ Error:", error);
     document.getElementById("status").textContent = "Error: " + error.message;
-    document.getElementById("connect-button").disabled = false;
   }
 }
 
@@ -81,23 +99,16 @@ async function manualDisconnect() {
 
 document.addEventListener("DOMContentLoaded", () => {
   console.log("=== DOM READY ===");
-  console.log("Connect button:", document.getElementById("connect-button"));
   console.log("Status div:", document.getElementById("status"));
   console.log("Video element:", document.getElementById("sm-video"));
 
-  document.getElementById("connect-button").disabled = false;
-  document.getElementById("status").textContent = "Ready to connect";
-
-  document.getElementById("connect-button").addEventListener("click", connect);
+  document.getElementById("status").textContent = "Connecting...";
   document
     .getElementById("disconnect-button")
     .addEventListener("click", manualDisconnect);
-  document.getElementById("reset-button").addEventListener("click", () => {
-    console.log("→ Resetting...");
-    clearInterval(timerInterval);
-    window.location.reload();
-  });
 
   console.log("✓ Event listeners attached");
+  console.log("✓ Auto-connecting...");
+  connect(); // Auto-initiate connection
 });
 
