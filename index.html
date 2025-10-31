@@ -11,6 +11,13 @@
     <script src="https://static.soulmachines.com/widget-snippet-1.12.0.min.js"></script>
     
     <script>
+    // Temporary - for testing only
+async function loadConfig() {
+  apiKey = "eyJzb3VsSWQiOiJkZG5hLWJhci1vZi1zb2FwNTY4Zi0tc3VydmV5MSIsImF1dGhTZXJ2ZXIiOiJodHRwczovL2RoLnNvdWxtYWNoaW5lcy5jbG91ZC9hcGkvand0IiwiYXV0aFRva2VuIjoiYXBpa2V5X3YxXzhkMjFmNTgxLTA4Y2UtNDJjNC1hYzkzLTZjZTUxMzFhNmRlOSJ9";
+  console.log('API Key loaded (hardcoded for testing)');
+  document.getElementById('status').textContent = 'Ready to connect';
+  document.getElementById('connect-button').disabled = false;
+}
         // Fetch the API key from your Cloudflare function
         fetch('/api/config')
             .then(response => response.json())
@@ -24,7 +31,7 @@
                     smScript.setAttribute('data-sm-api-key', config.smApiKey);
                 }
                 
-                document.getElementById('status').textContent = 'Ready!';
+                document.getElementById('status').textContent = 'Ready 123!';
             })
             .catch(error => {
                 console.error('Failed to load config:', error);
