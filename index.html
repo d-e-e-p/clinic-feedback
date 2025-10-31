@@ -92,9 +92,14 @@
             },
         };
 
-        // pageText object is no longer needed, text is now in languageConfig
-        // const pageText = { ... };
-        // --- End Emulating js/config.js content ---
+        const pageText = {
+          // This object structure is now redundant because all text is in languageConfig, 
+          // but we keep it defined to prevent other possible ReferenceErrors if your 
+          // other files still use 'pageText'.
+          title: "Clinic Feedback",
+          instruction: "Please select a language and press Start",
+        };
+
 
 
         // --- Emulating js/main.js logic ---
