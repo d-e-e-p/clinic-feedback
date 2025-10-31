@@ -99,23 +99,8 @@ async function connect() {
 function showThankYouAndReset() {
   document.getElementById("thank-you-screen").style.display = "flex";
   setTimeout(() => {
-    // Reset UI
-    document.getElementById("sm-video").style.display = "none";
-    document.getElementById("thank-you-screen").style.display = "none";
-    document.getElementById("timer-display").style.display = "none";
-    document.getElementById("timer-position").style.display = "none";
-    document.getElementById("controls").style.display = "none";
-
-    // Fade back to language selection
-    document.getElementById("languageContainer").style.opacity = "1";
-    document.getElementById("startButton").style.visibility = "visible";
-    document.getElementById("pageTitle").style.display = "block";
-    document.getElementById("instructions").style.display = "block";
-
-    // Reset video element
-    const videoEl = document.getElementById("sm-video");
-    videoEl.srcObject = null;
-    if (videoEl.src) URL.revokeObjectURL(videoEl.src);
+    // Redirect back to language selection page
+    window.location.href = "/";
   }, REDIRECT_DELAY_MS);
 }
 
@@ -127,6 +112,8 @@ async function manualDisconnect() {
 
 document.addEventListener("DOMContentLoaded", () => {
   console.log("=== DOM READY ===");
+  console.log("✓ Auto-connecting...");
+  connect();
   document
     .getElementById("disconnect-button")
     .addEventListener("click", manualDisconnect);

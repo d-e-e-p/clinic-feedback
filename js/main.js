@@ -85,21 +85,8 @@ container.addEventListener("click", (event) => {
 
 startButton.addEventListener("click", () => {
   if (selectedConfig) {
-    // Keep language UI visible but faded
-    container.style.opacity = '0.2';
-    startButton.style.visibility = 'hidden';
-    
-    // Set language for API key
-    document.documentElement.lang = selectedConfig.isoCode || selectedConfig.code;
-    
-    // Show video elements
-    document.getElementById('sm-video').style.display = 'block';
-    document.getElementById('timer-display').style.display = 'block';
-    document.getElementById('timer-position').style.display = 'block';
-    document.getElementById('controls').style.display = 'block';
-    
-    // Initialize connection
-    connect();
+    // Navigate to language-specific page
+    window.location.href = `/pages/${selectedConfig.isoCode}.html`;
   }
 });
 
