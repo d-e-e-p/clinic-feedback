@@ -7,10 +7,19 @@
     <link rel="stylesheet" href="/css/page_style.css">
 </head>
 <body>
-    <h1>Clinic Feedback - Debug Mode</h1>
+    <h1>Clinic Feedback</h1>
     
     <div id="status">Initializing...</div>
     
+    
+    <video id="sm-video" autoplay playsinline></video>
+    
+    <div>
+        <button id="connect-button" disabled>Connect</button>
+        <button id="disconnect-button">End Session</button>
+        <button id="reset-button">Reset</button>
+    </div>
+
     <!-- Timer Display -->
     <div id="timer-display">
         <h3>Session Time Remaining</h3>
@@ -29,14 +38,6 @@
             </svg>
             <div id="timer-text">3:00</div>
         </div>
-    </div>
-    
-    <video id="sm-video" autoplay playsinline></video>
-    
-    <div>
-        <button id="connect-button" disabled>Connect</button>
-        <button id="disconnect-button">End Session</button>
-        <button id="reset-button">Reset</button>
     </div>
 
     <!-- Load Soul Machines SDK -->
