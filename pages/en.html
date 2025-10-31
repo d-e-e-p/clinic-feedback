@@ -4,51 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clinic Feedback</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/page_style.css">
 </head>
 <body>
-
-    <h1>Digital Human Feedback Interface</h1>
-
-    <!-- Main Content Wrapper (Used to hide/show the entire session interface) -->
-    <!--  <video id="sm-video" autoplay playsinline></video> -->
-    <div id="app-content"> 
-        <div id="status">Status: Initializing...</div>
-
-        <!-- Video Container -->
-        <div class="flex justify-center">
-            <div id="sm-video"></div>
-        </div>
-
-        <!-- Timer Display (Below the video, using a bar) -->
-        <div id="timer-display">
-            <h2>Time Remaining</h2>
-            <div id="progress-bar-container">
-                <div id="progress-bar"></div>
-                <div id="timer-text">3:00</div>
-            </div>
-        </div>
-
-        <!-- Controls (Centered Buttons) -->
-        <div id="controls" class="flex justify-center mt-4">
-            <!-- New button to satisfy browser's user interaction requirement -->
-            <button id="start-video-button" class="control-button bg-blue-500 hover:bg-blue-600">Start Video</button>
-            
-            <!-- Button to manually end the session -->
-            <button id="end-session-button" class="control-button">End Session</button>
+    <h1>Clinic Feedback - Debug Mode</h1>
+    
+    <div id="status">Initializing...</div>
+    
+    <!-- Timer Display -->
+    <div id="timer-display">
+        <h3>Session Time Remaining</h3>
+        <div id="timer-container">
+            <svg id="timer-svg" width="200" height="200" viewBox="0 0 200 200">
+                <!-- Outer circle -->
+                <circle cx="100" cy="100" r="90" fill="none" stroke="#e0e0e0" stroke-width="8"/>
+                <!-- Progress circle -->
+                <circle id="timer-circle" cx="100" cy="100" r="90" 
+                        stroke-dasharray="565.48" stroke-dashoffset="0"/>
+                <!-- Timer hand -->
+                <line id="timer-hand" x1="100" y1="100" x2="100" y2="20" 
+                      stroke="#333" stroke-width="3" stroke-linecap="round"/>
+                <!-- Center dot -->
+                <circle cx="100" cy="100" r="6" fill="#333"/>
+            </svg>
+            <div id="timer-text">3:00</div>
         </div>
     </div>
-
-    <!-- Thank You Screen -->
-    <div id="thank-you-screen">
-        <h2>Thank You for Your Feedback!</h2>
-        <p>This session has ended. Redirecting to the main page...</p>
+    
+    <video id="sm-video" autoplay playsinline></video>
+    
+    <div>
+        <button id="connect-button" disabled>Connect</button>
+        <button id="disconnect-button">End Session</button>
+        <button id="reset-button">Reset</button>
     </div>
 
-    <!-- SDK and Main Logic -->
-    <!-- The SoulMachines Web SDK must be loaded before app.js -->
+    <!-- Load Soul Machines SDK -->
     <script src="/js/smwebsdk.min.js"></script>
+    
+    <!-- Load your app -->
     <script src="/js/app.js"></script>
+    
+    <script>
+        // Debug: Check if everything loaded
+        console.log('=== DEBUG INFO ===');
+        console.log('Page loaded at:', new Date().toISOString());
+        console.log('smwebsdk loaded:', typeof smwebsdk !== 'undefined');
+        console.log('Scene available:', typeof smwebsdk !== 'undefined' && typeof smwebsdk.Scene !== 'undefined');
+    </script>
 </body>
 </html>
