@@ -2,41 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clinic Feedback</title>
 </head>
 <body>
     <h1>Clinic Feedback</h1>
-    <div id="status">Loading 123...</div>
-
-    <script src="https://static.soulmachines.com/widget-snippet-1.12.0.min.js"></script>
     
-    <script>
-    // Temporary - for testing only
-async function loadConfig() {
-  apiKey = "eyJzb3VsSWQiOiJkZG5hLWJhci1vZi1zb2FwNTY4Zi0tc3VydmV5MSIsImF1dGhTZXJ2ZXIiOiJodHRwczovL2RoLnNvdWxtYWNoaW5lcy5jbG91ZC9hcGkvand0IiwiYXV0aFRva2VuIjoiYXBpa2V5X3YxXzhkMjFmNTgxLTA4Y2UtNDJjNC1hYzkzLTZjZTUxMzFhNmRlOSJ9";
-  console.log('API Key loaded (hardcoded for testing)');
-  document.getElementById('status').textContent = 'Ready to connect';
-  document.getElementById('connect-button').disabled = false;
-}
-        // Fetch the API key from your Cloudflare function
-        fetch('/api/config')
-            .then(response => response.json())
-            .then(config => {
-                console.log('API Key loaded');
-                
-                // Find the Soul Machines script element
-                const smScript = document.querySelector('script[src*="soulmachines"]');
-                
-                if (config.smApiKey && smScript) {
-                    smScript.setAttribute('data-sm-api-key', config.smApiKey);
-                }
-                
-                document.getElementById('status').textContent = 'Ready 123!';
-            })
-            .catch(error => {
-                console.error('Failed to load config:', error);
-                document.getElementById('status').textContent = 'Error loading configuration';
-            });
-    </script>
+    <div id="status">Loading configuration...</div>
+    
+    <video id="sm-video" autoplay playsinline></video>
+    
+    <div>
+        <button id="connect-button" disabled>Connect</button>
+        <button id="reset-button">Reset</button>
+    </div>
+
+    <!-- Load Soul Machines SDK -->
+    <script src="https://cdn.soulmachines.cloud/web-platform/1.17.2/smwebsdk.min.js"></script>
+    
+    <!-- Load your app script AFTER the HTML elements -->
+    <script src="js/app.js"></script>
 </body>
 </html>
