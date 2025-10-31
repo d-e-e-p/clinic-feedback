@@ -11,3 +11,13 @@
      color: white;
      border-width: 3px;
  }
+ 
+ /* Language selector positioning */
+ #languageContainer {
+     position: relative;
+     z-index: 1000;
+ }
+ #startButton {
+     position: relative;
+     z-index: 1000;
+ }

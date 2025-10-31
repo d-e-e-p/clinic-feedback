@@ -23,12 +23,7 @@ function updateTimer() {
   // End session when time runs out
   if (remaining <= 0) {
     clearInterval(timerInterval);
-    disconnectSession().then(() => {
-      document.getElementById("thank-you-screen").style.display = "flex";
-      setTimeout(() => {
-        window.location.href = REDIRECT_URL;
-      }, REDIRECT_DELAY_MS);
-    });
+    disconnectSession().then(showThankYouAndReset);
   }
 }
 
@@ -104,26 +99,32 @@ async function connect() {
   }
 }
 
+function showThankYouAndReset() {
+  document.getElementById("thank-you-screen").style.display = "flex";
+  setTimeout(() => {
+    // Reset UI
+    document.getElementById('sm-video').style.display = 'none';
+    document.getElementById('thank-you-screen').style.display = 'none';
+    document.getElementById('timer-display').style.display = 'none';
+    document.getElementById('timer-position').style.display = 'none';
+    document.getElementById('controls').style.display = 'none';
+    document.getElementById('languageContainer').style.display = 'block';
+    document.getElementById('startButton').style.display = 'block';
+    document.getElementById('pageTitle').style.display = 'block';
+    document.getElementById('instructions').style.display = 'block';
+  }, REDIRECT_DELAY_MS);
+}
+
 async function manualDisconnect() {
   clearInterval(timerInterval);
   await disconnectSession();
-  document.getElementById("thank-you-screen").style.display = "flex";
-  setTimeout(() => {
-    window.location.href = REDIRECT_URL;
-  }, REDIRECT_DELAY_MS);
+  showThankYouAndReset();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   console.log("=== DOM READY ===");
-  console.log("Status div:", document.getElementById("status"));
-  console.log("Video element:", document.getElementById("sm-video"));
-
-  document.getElementById("status").textContent = "Connecting...";
   document
     .getElementById("disconnect-button")
     .addEventListener("click", manualDisconnect);
-
   console.log("✓ Event listeners attached");
-  console.log("✓ Auto-connecting...");
-  connect(); // Auto-initiate connection
 });

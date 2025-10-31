@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="/css/main_style.css">
 </head>
-<body class="min-h-screen bg-gray-50 flex flex-col font-sans">
+<body class="min-h-screen bg-gray-50 flex flex-col font-sans" style="position: relative">
     <div class="flex-grow flex items-center justify-center p-4">
         <div class="w-full max-w-sm bg-white rounded-xl shadow-2xl p-6 md:p-8">
             
@@ -32,7 +32,28 @@
         </div>
     </div>
 
+    <!-- Video and session elements -->
+    <video id="sm-video" autoplay playsinline style="display: none"></video>
+    <div id="timer-display" style="display: none">
+        <div id="progress-bar-container">
+            <div id="progress-bar"></div>
+        </div>
+    </div>
+    <div id="timer-position" style="display: none">
+        <div id="timer-text">3:00</div>
+    </div>
+    <div id="controls" style="display: none">
+        <button id="disconnect-button">End Session</button>
+    </div>
+    <div id="thank-you-screen" style="display: none">
+        <h2>Thank You for Your Feedback!</h2>
+        <p>This session has ended. Redirecting...</p>
+    </div>
+
+    <!-- Load Soul Machines SDK -->
+    <script src="/js/smwebsdk.min.js"></script>
     <script src="js/config.js"></script>
+    <script src="js/app.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>

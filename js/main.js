@@ -85,9 +85,23 @@ container.addEventListener("click", (event) => {
 
 startButton.addEventListener("click", () => {
   if (selectedConfig) {
-    // In a real application, you would navigate here:
-    window.location.href = selectedConfig.surveyLink;
-    //alert(`Starting survey for ${selectedConfig.name} at: ${selectedConfig.surveyLink}`);
+    // Hide language selection
+    container.style.display = 'none';
+    startButton.style.display = 'none';
+    pageTitle.style.display = 'none';
+    instructions.style.display = 'none';
+    
+    // Set language for API key
+    document.documentElement.lang = selectedConfig.code;
+    
+    // Show video elements
+    document.getElementById('sm-video').style.display = 'block';
+    document.getElementById('timer-display').style.display = 'block';
+    document.getElementById('timer-position').style.display = 'block';
+    document.getElementById('controls').style.display = 'block';
+    
+    // Initialize connection
+    connect();
   }
 });
 

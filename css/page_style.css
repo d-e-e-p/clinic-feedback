@@ -5,6 +5,15 @@ body {
     padding: 0;
     overflow: hidden; /* Prevent scrolling */
 }
+
+/* Ensure language selector stays on top */
+#languageContainer {
+    position: relative;
+    z-index: 1001;
+}
+#startButton {
+    z-index: 1001;
+}
 #sm-video {
     position: fixed;
     top: 0;
