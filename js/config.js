@@ -90,3 +90,43 @@ const translationsPage = {
   }
   // Add other languages as needed
 };
+// SINGLE config.js file containing both translation objects
+const translationsMain = {
+  english: {
+    name: "English",
+    emoji: "🇬🇧",
+    isoCode: "en",
+    title: "Clinic Feedback",
+    instruction: "Please select your preferred language",
+    buttonText: "Start Session",
+    backgroundColor: "#3B82F6"
+  },
+  spanish: {
+    name: "Spanish",
+    emoji: "🇪🇸",
+    isoCode: "es",
+    title: "Comentarios Clínicos",
+    instruction: "Seleccione su idioma preferido",
+    buttonText: "Iniciar Sesión",
+    backgroundColor: "#10B981"
+  }
+};
+
+const translationsPage = {
+  en: {
+    apiKey: "eyJzb3VsSWQ...", // English API key
+    statusMessages: {
+      connecting: "Connecting to specialist...",
+      connected: "Connected! Starting session...",
+      error: "Connection error - please try again"
+    }
+  },
+  es: {
+    apiKey: "eyJZhbHVl...", // Spanish API key
+    statusMessages: {
+      connecting: "Conectando con especialista...",
+      connected: "¡Conectado! Iniciando sesión...",
+      error: "Error de conexión - por favor intente nuevamente"
+    }
+  }
+};
