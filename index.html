@@ -4,20 +4,189 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clinic Feedback</title>
-    <title>Clinic Feedback</title>
-    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Optional custom styles for smooth transition and interactivity */
+        .language-option {
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        .language-option:hover:not(.selected) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        /* Base styles for selection */
+        .selected {
+            color: white;
+            border-width: 3px;
+        }
+    </style>
 </head>
-<body>
-    <header>
-        <h1 id="pageTitle"></h1>
-        <p id="instructions"></p>
-    </header>
-    
-    <div class="bubble-container" id="bubbleContainer"></div>
-    
-    <button id="startButton"></button>
+<body class="min-h-screen bg-gray-50 flex flex-col font-sans">
+    <div class="flex-grow flex items-center justify-center p-4">
+        <div class="w-full max-w-sm bg-white rounded-xl shadow-2xl p-6 md:p-8">
+            
+            <!-- Header elements based on your desired structure -->
+            <header class="text-center mb-6">
+                <h1 id="pageTitle" class="text-3xl font-extrabold text-gray-800"></h1>
+                <p id="instructions" class="text-gray-500 mt-2 text-lg"></p>
+            </header>
 
-    <script src="js/config.js"></script>
-    <script src="js/main.js"></script>
+            <!-- Language Selector Container (Pill Style) -->
+            <div class="space-y-4" id="languageContainer">
+                <!-- Language options will be injected here by JavaScript -->
+            </div>
+
+            <!-- Start Button (Disabled by Default) -->
+            <button 
+                id="startButton"
+                class="w-full mt-8 py-4 rounded-xl text-white text-2xl font-bold transition duration-300 bg-gray-400 cursor-not-allowed uppercase"
+                disabled
+            >
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // --- Emulating js/config.js content ---
+        const languageConfig = {
+            english: {
+                name: "English",
+                title: "Clinic Feedback",
+                instruction: "Please select a language and press Start",
+                code: "en",
+                buttonText: "Start",
+                surveyLink: "/pages/en.html",
+                backgroundColor: "#368dda", // Blue
+                emoji: "🇺🇸",
+            },
+            spanish: {
+                name: "Español",
+                title: "Comentarios de la Clínica",
+                instruction: "Por favor, seleccione un idioma y presione Empezar",
+                code: "es",
+                buttonText: "Comenzar",
+                surveyLink: "/pages/es.html",
+                backgroundColor: "#2ecc71", // Green
+                emoji: "🇪🇸",
+            },
+            french: {
+                name: "Français",
+                title: "Avis de la Clinique",
+                instruction: "Veuillez sélectionner une langue et appuyer sur Commencer",
+                code: "fr",
+                buttonText: "Commencer",
+                surveyLink: "/pages/fr.html",
+                backgroundColor: "#e74c3c", // Red
+                emoji: "🇫🇷",
+            },
+            chinese: {
+                name: "中文 (Zhōngwén)",
+                title: "诊所反馈",
+                instruction: "请选择一种语言并按“开始”",
+                code: "zh",
+                buttonText: "开始",
+                surveyLink: "/pages/zh.html",
+                backgroundColor: "#f1c40f", // Yellow
+                emoji: "🇨🇳",
+            },
+        };
+
+        // pageText object is no longer needed, text is now in languageConfig
+        // const pageText = { ... };
+        // --- End Emulating js/config.js content ---
+
+
+        // --- Emulating js/main.js logic ---
+        const container = document.getElementById('languageContainer');
+        const startButton = document.getElementById('startButton');
+        const pageTitle = document.getElementById('pageTitle');
+        const instructions = document.getElementById('instructions');
+        
+        let selectedConfig = null;
+        let initialSelectedKey = 'english'; // Force English to be selected initially
+
+        // 1. Inject language options into the container
+        function renderLanguageOptions() {
+            Object.keys(languageConfig).forEach(key => {
+                const config = languageConfig[key];
+                const div = document.createElement('div');
+                
+                // Use flex to align text and emoji
+                div.className = "language-option p-4 border-2 border-gray-200 rounded-lg text-gray-700 text-lg font-medium hover:border-blue-400 flex justify-between items-center";
+                
+                div.innerHTML = `
+                    <span>${config.name}</span>
+                    <span class="text-xl">${config.emoji}</span>
+                `;
+                
+                div.dataset.code = config.code;
+                div.dataset.key = key;
+                
+                container.appendChild(div);
+            });
+            
+            // 2. Set initial selection state (English)
+            const initialSelectionElement = container.querySelector(`[data-key="${initialSelectedKey}"]`);
+            if (initialSelectionElement) {
+                // Manually trigger the selection logic for the initial element
+                simulateSelection(initialSelectionElement, initialSelectedKey);
+            }
+        }
+        
+        // Helper function to handle all selection/styling logic
+        function simulateSelection(targetElement, key) {
+            selectedConfig = languageConfig[key];
+            
+            // Deselect and reset all options
+            document.querySelectorAll('.language-option').forEach(el => {
+                el.classList.remove('selected', 'bg-blue-600', 'bg-green-500', 'bg-red-600', 'bg-yellow-500', 'border-4');
+                el.classList.add('text-gray-700', 'border-gray-200');
+                el.style.backgroundColor = '';
+                el.style.borderColor = '';
+            });
+            
+            // Apply selection style and custom background color
+            targetElement.classList.add('selected');
+            targetElement.classList.remove('text-gray-700', 'border-gray-200');
+            targetElement.style.backgroundColor = selectedConfig.backgroundColor;
+            targetElement.style.borderColor = selectedConfig.backgroundColor;
+
+            // --- UPDATE ALL TEXT ELEMENTS ---
+            pageTitle.textContent = selectedConfig.title;
+            instructions.textContent = selectedConfig.instruction;
+            startButton.textContent = selectedConfig.buttonText;
+            
+            // Enable and update the Start button styling
+            startButton.disabled = false;
+            startButton.classList.remove('bg-gray-400', 'cursor-not-allowed');
+            startButton.style.backgroundColor = selectedConfig.backgroundColor;
+            startButton.classList.add('shadow-lg');
+        }
+
+
+        // 3. Handle click events (delegated to container)
+        container.addEventListener('click', (event) => {
+            const target = event.target.closest('.language-option');
+            if (target) {
+                const key = target.dataset.key;
+                simulateSelection(target, key);
+            }
+        });
+
+        startButton.addEventListener('click', () => {
+            if (selectedConfig) {
+                // In a real application, you would navigate here:
+                window.location.href = selectedConfig.surveyLink;
+                //alert(`Starting survey for ${selectedConfig.name} at: ${selectedConfig.surveyLink}`);
+            }
+        });
+
+        // Initial rendering call
+        renderLanguageOptions();
+        // --- End Emulating js/main.js logic ---
+
+    </script>
 </body>
 </html>
+
