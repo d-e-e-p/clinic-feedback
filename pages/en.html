@@ -4,52 +4,286 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clinic Feedback</title>
-    <link rel="stylesheet" href="/css/page_style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Base page and content styles */
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1080px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        /* Video container settings */
+        #sm-video {
+            width: 100%;
+            max-width: 800px;
+            height: 600px;
+            background: #000;
+            margin: 20px auto; /* Centered video */
+        }
+        .control-button {
+            padding: 12px 24px;
+            margin: 10px 5px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            background: #f44336; /* Red for End Session */
+            color: white;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        #status {
+            padding: 10px;
+            margin: 10px auto; /* Centered status */
+            max-width: 800px;
+            border-radius: 4px;
+            background: #f0f0f0;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        /* --- Progress Bar Styles --- */
+        #timer-display {
+            text-align: center;
+            margin: 20px auto;
+            max-width: 800px;
+        }
+        #progress-bar-container {
+            width: 100%;
+            height: 25px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin-top: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        #progress-bar {
+            height: 100%;
+            width: 100%; /* Starts full */
+            background-color: #4CAF50; /* Green */
+            transition: width 0.1s linear, background-color 0.3s ease;
+        }
+        #timer-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            mix-blend-mode: overlay; /* Helps text stand out against the bar */
+        }
+
+        /* Thank You Modal/Screen styles */
+        #thank-you-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            display: none; /* Hidden by default */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            z-index: 1000;
+        }
+        #thank-you-screen h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        #thank-you-screen p {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Clinic Feedback</h1>
-    
-    <div id="status">Initializing...</div>
-    
-    
-    <video id="sm-video" autoplay playsinline></video>
-    
-    <div>
-        <button id="connect-button" disabled>Connect</button>
-        <button id="disconnect-button">End Session</button>
-        <button id="reset-button">Reset</button>
-    </div>
 
-    <!-- Timer Display -->
-    <div id="timer-display">
-        <h3>Session Time Remaining</h3>
-        <div id="timer-container">
-            <svg id="timer-svg" width="200" height="200" viewBox="0 0 200 200">
-                <!-- Outer circle -->
-                <circle cx="100" cy="100" r="90" fill="none" stroke="#e0e0e0" stroke-width="8"/>
-                <!-- Progress circle -->
-                <circle id="timer-circle" cx="100" cy="100" r="90" 
-                        stroke-dasharray="565.48" stroke-dashoffset="0"/>
-                <!-- Timer hand -->
-                <line id="timer-hand" x1="100" y1="100" x2="100" y2="20" 
-                      stroke="#333" stroke-width="3" stroke-linecap="round"/>
-                <!-- Center dot -->
-                <circle cx="100" cy="100" r="6" fill="#333"/>
-            </svg>
-            <div id="timer-text">3:00</div>
+    <h1>Family Van Visit Feedback</h1>
+
+    <!-- Main Content Wrapper (Used to hide/show the entire session interface) -->
+    <div id="app-content"> 
+        <div id="status">Status: Initializing...</div>
+
+        <!-- Video Container -->
+        <div id="sm-video"></div>
+
+        <!-- Timer Display (Below the video, using a bar) -->
+        <div id="timer-display">
+            <h2>Time Remaining</h2>
+            <div id="progress-bar-container">
+                <div id="progress-bar"></div>
+                <div id="timer-text">3:00</div>
+            </div>
+        </div>
+
+        <!-- Controls (Centered Button) -->
+        <div id="controls" class="flex justify-center mt-4">
+            <!-- Single button to manually end the session -->
+            <button id="end-session-button" class="control-button">End Session</button>
         </div>
     </div>
 
-    <!-- Load Soul Machines SDK and app-->
-    <script src="/js/smwebsdk.min.js"></script>
-    <script src="/js/app.js"></script>
-    
+    <!-- Thank You Screen -->
+    <div id="thank-you-screen">
+        <h2>Thank You for Your Feedback!</h2>
+        <p>This session has ended. Redirecting to the main page...</p>
+    </div>
+
+   <!-- Load Soul Machines SDK and app-->
+   <script src="/js/smwebsdk.min.js"></script>
+
     <script>
-        // Debug: Check if everything loaded
-        console.log('=== DEBUG INFO ===');
-        console.log('Page loaded at:', new Date().toISOString());
-        console.log('smwebsdk loaded:', typeof smwebsdk !== 'undefined');
-        console.log('Scene available:', typeof smwebsdk !== 'undefined' && typeof smwebsdk.Scene !== 'undefined');
+        // --- Configuration ---
+        const REDIRECT_DELAY_MS = 4000; // 4 seconds delay before redirecting
+        const REDIRECT_URL = 'index.html'; // Assuming the main page is index.html
+
+        // --- Core App Logic ---
+        let scene;
+        let timerInterval;
+        let sessionStartTime;
+        // Set the timer duration in milliseconds (3 minutes)
+        const SESSION_DURATION = 3 * 60 * 1000; 
+        const apiKey = "eyJzb3VsSWQiOiJkZG5hLWJhci1vZi1zb2FwNTY4Zi0tc3VydmV5MSIsImF1dGhTZXJ2ZXIiOiJodHRwczovL2RoLnNvdWxtYWNoaW5lcy5jbG91ZC9hcGkvand0IiwiYXV0aFRva2VuIjoiYXBpa2V5X3YxXzhkMjFmNTgxLTA4Y2NlLTRjNC1hYzkzLTZjZTUxMzFhNmRlOSJ9";
+        
+        // --- Timer UI Elements ---
+        const timerText = document.getElementById('timer-text');
+        const progressBar = document.getElementById('progress-bar');
+        const thankYouScreen = document.getElementById('thank-you-screen');
+        const statusElement = document.getElementById('status');
+        const appContent = document.getElementById('app-content');
+        
+        function updateTimer() {
+            const elapsed = Date.now() - sessionStartTime;
+            let remaining = Math.max(0, SESSION_DURATION - elapsed);
+            
+            // Fix for floating point precision: ensure it's not a tiny negative number
+            if (remaining < 100) { 
+                remaining = 0;
+            }
+
+            // Calculate time components
+            const totalSeconds = Math.ceil(remaining / 1000);
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            
+            // --- Digital Display Update ---
+            timerText.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            
+            // --- Progress Bar Update ---
+            const percentage = (remaining / SESSION_DURATION) * 100;
+            progressBar.style.width = `${percentage}%`;
+
+            // --- Color Change ---
+            const remaining_s = remaining / 1000;
+            
+            if (remaining_s < 60) { // Last minute (Red)
+                progressBar.style.backgroundColor = '#f44336'; 
+            } else if (remaining_s < 120) { // Last 2 minutes (Orange)
+                progressBar.style.backgroundColor = '#ff9800'; 
+            } else { // Green
+                progressBar.style.backgroundColor = '#4CAF50'; 
+            }
+            
+            // Auto-disconnect when time runs out
+            if (remaining === 0) {
+                clearInterval(timerInterval);
+                timerExpired();
+            }
+        }
+
+        function timerExpired() {
+            // Disconnect the SDK session
+            disconnectSession(true); // Pass true to indicate time expired
+        }
+
+        async function disconnectSession(isTimeExpired = false) {
+            console.log('→ Disconnecting session...');
+            clearInterval(timerInterval); // Stop any lingering timer
+            
+            try {
+                if (scene) {
+                    await scene.disconnect();
+                    console.log('✓ Session disconnected');
+                }
+            } catch (error) {
+                console.error('✗ Error disconnecting:', error);
+            }
+            
+            // Show the final message and redirect
+            appContent.style.display = 'none'; 
+            document.getElementById('timer-display').style.display = 'none';
+
+            thankYouScreen.style.display = 'flex';
+            
+            if (!isTimeExpired) {
+                // If manual disconnect, adjust message slightly
+                thankYouScreen.querySelector('p').textContent = 'Session manually ended. Redirecting to the main page...';
+            }
+
+            // Redirect after a delay
+            setTimeout(() => {
+                window.location.href = REDIRECT_URL;
+            }, REDIRECT_DELAY_MS);
+        }
+
+        async function connect() {
+            statusElement.textContent = 'Connecting...';
+            const endButton = document.getElementById('end-session-button');
+            endButton.disabled = true; // Disable until connected
+
+            const videoEl = document.getElementById("sm-video");
+            
+            try {
+                scene = new smwebsdk.Scene({
+                    apiKey: apiKey,
+                    videoElement: videoEl,
+                    requestedMediaDevices: { microphone: true, camera: false },
+                    requiredMediaDevices: { microphone: true, camera: false }
+                });
+                
+                const sessionId = await scene.connect();
+                await scene.startVideo();
+                
+                statusElement.textContent = 'Session active - 3 minutes remaining';
+                endButton.disabled = false; // Enable end button
+
+                // Start the timer
+                sessionStartTime = Date.now();
+                timerInterval = setInterval(updateTimer, 100); 
+                updateTimer(); // Initial update
+                
+            } catch (error) {
+                console.error('✗ Error during connection:', error);
+                statusElement.textContent = 'Error: ' + error.message;
+                endButton.disabled = false;
+            }
+        }
+
+        // --- Event Listeners and Auto-Start ---
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('=== APP.JS LOADED: DOM READY ===');
+            
+            // Initial status before connection attempt
+            statusElement.textContent = 'Attempting connection...'; 
+            
+            // Attach event listener for the single "End Session" button
+            document.getElementById('end-session-button').addEventListener('click', () => {
+                disconnectSession(false); // False indicates manual disconnect
+            });
+            
+            // AUTO-START THE SESSION
+            connect(); 
+        });
     </script>
 </body>
 </html>
