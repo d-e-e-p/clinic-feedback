@@ -33,8 +33,7 @@ const apiKey = translationsPage[langCode]?.apiKey;
 // Add error handling
 if (!apiKey) {
   console.error("No API key found for language:", langCode);
-  document.getElementById("status").textContent =
-    "Configuration error - please try again";
+  //document.getElementById("status").textContent = "Configuration error - please try again";
   throw new Error("Missing API key for language");
 }
 
@@ -45,8 +44,7 @@ async function disconnectSession() {
     if (scene) {
       await scene.disconnect();
       console.log("✓ Session disconnected");
-      document.getElementById("status").textContent =
-        "Session ended (time limit reached)";
+      //document.getElementById("status").textContent = "Session ended (time limit reached)";
       document.getElementById("timer-display").style.display = "none";
     }
   } catch (error) {
@@ -58,7 +56,7 @@ async function connect() {
   console.log("→ Connect button clicked");
   console.log("→ API Key:", apiKey.substring(0, 20) + "...");
 
-  document.getElementById("status").textContent = "Connecting...";
+  //document.getElementById("status").textContent = "Connecting...";
 
   console.log("→ loading video element...");
   const videoEl = document.getElementById("sm-video");
@@ -79,13 +77,13 @@ async function connect() {
     const sessionId = await scene.connect();
     console.log("✓ Connected! Session ID:", sessionId);
 
-    document.getElementById("status").textContent = "Connection established!";
+    //document.getElementById("status").textContent = "Connection established!";
 
     console.log("→ Starting video...");
     const videoState = await scene.startVideo();
     console.log("✓ Video started:", videoState);
 
-    document.getElementById("status").textContent = "Session active";
+    //document.getElementById("status").textContent = "Session active";
 
     // Start the timer
     sessionStartTime = Date.now();
@@ -94,7 +92,7 @@ async function connect() {
     updateTimer(); // Initial update
   } catch (error) {
     console.error("✗ Error:", error);
-    document.getElementById("status").textContent = "Error: " + error.message;
+    //document.getElementById("status").textContent = "Error: " + error.message;
   }
 }
 
