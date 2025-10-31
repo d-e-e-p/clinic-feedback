@@ -1,8 +1,35 @@
-<html>
-  <head>
-    <title>test</title>
-  </head>
-  <body>
-    <h1>test</h1>
-  </body>
-  <html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Clinic Feedback</title>
+</head>
+<body>
+    <h1>Clinic Feedback</h1>
+    <div id="status">Loading...</div>
+
+    <script src="https://static.soulmachines.com/widget-snippet-1.12.0.min.js"></script>
+    
+    <script>
+        // Fetch the API key from your Cloudflare function
+        fetch('/api/config')
+            .then(response => response.json())
+            .then(config => {
+                console.log('API Key loaded');
+                
+                // Find the Soul Machines script element
+                const smScript = document.querySelector('script[src*="soulmachines"]');
+                
+                if (config.smApiKey && smScript) {
+                    smScript.setAttribute('data-sm-api-key', config.smApiKey);
+                }
+                
+                document.getElementById('status').textContent = 'Ready!';
+            })
+            .catch(error => {
+                console.error('Failed to load config:', error);
+                document.getElementById('status').textContent = 'Error loading configuration';
+            });
+    </script>
+</body>
+</html>
