@@ -59,7 +59,7 @@ async function connect() {
   console.log("→ API Key:", apiKey.substring(0, 20) + "...");
 
   document.getElementById("status").textContent = 
-    translationsPage[langCode].statusMessages.connecting;
+    translationsPage[langCode]?.statusMessages?.connecting || "Connecting...";
 
   const videoEl = document.getElementById("sm-video");
   console.log("→ Video element:", videoEl);
@@ -80,7 +80,7 @@ async function connect() {
     console.log("✓ Connected! Session ID:", sessionId);
 
     document.getElementById("status").textContent =
-      translationsPage[langCode].statusMessages.connected;
+      translationsPage[langCode]?.statusMessages?.connected || "Connection established!";
 
     console.log("→ Starting video...");
     const videoState = await scene.startVideo();
@@ -95,7 +95,8 @@ async function connect() {
     updateTimer(); // Initial update
   } catch (error) {
     console.error("✗ Error:", error);
-    document.getElementById("status").textContent = "Error: " + error.message;
+    document.getElementById("status").textContent = 
+      translationsPage[langCode]?.statusMessages?.error || "Error: " + error.message;
   }
 }
 

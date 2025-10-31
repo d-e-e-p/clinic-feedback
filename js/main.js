@@ -92,7 +92,7 @@ startButton.addEventListener("click", () => {
     instructions.style.display = 'none';
     
     // Set language for API key
-    document.documentElement.lang = selectedConfig.code;
+    document.documentElement.lang = selectedConfig.isoCode || selectedConfig.code;
     
     // Show video elements
     document.getElementById('sm-video').style.display = 'block';
