@@ -3,15 +3,7 @@
   "name": "clinic-feedback-wrangler",
   "compatibility_date": "2025-11-01",
   "site": {
-    "bucket": "./workers-site"
+    "bucket": "."
   },
   "main": "workers-site/index.ts",
-  "observability": {
-    "logs": {
-      "enabled": true,
-      "head_sampling_rate": 1,
-      "invocation_logs": true,
-      "persist": true
-    }
-  }
 }

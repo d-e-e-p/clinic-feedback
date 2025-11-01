@@ -1,7 +1,19 @@
-name = "clinic-feedback"
+name = "clinic-feedback-wrangler"
 compatibility_date = "2024-05-20"
 main = "workers-site/index.ts"
 compatibility_flags = ["nodejs_compat"]
+
+[observability]
+[observability.logs]
+enabled = true
+head_sampling_rate = 1
+invocation_logs = true
+persist = true
+
+[observability.traces]
+enabled = false
+persist = true
+head_sampling_rate = 1
 
 [site]
 bucket = "."
