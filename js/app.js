@@ -33,7 +33,7 @@ function updateTimer() {
 }
 
 const langCode = document.documentElement.lang; // Get from <html lang>
-const apiKey = apiKeys[langCode]?.apiKey;
+const apiKey = apiKeys[langCode];
 
 // Add error handling
 if (!apiKey) {
