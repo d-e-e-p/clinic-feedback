@@ -118,6 +118,30 @@ button {
     text-align: center;
 }
 
+/* Connection Progress Bar */
+#connection-progress-container {
+    position: fixed;
+    top: 50%;
+    left: 15%;
+    right: 15%;
+    width: 70%;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    z-index: 1000;
+    display: none;
+    transform: translateY(-50%);
+    overflow: hidden;
+}
+
+#connection-progress-bar {
+    height: 100%;
+    width: 0;
+    background: #4CAF50;
+    transition: width 0.1s ease;
+    box-shadow: 0 2px 10px rgba(76, 175, 80, 0.3);
+}
+
 /* Thank You Modal/Screen styles */
 #thank-you-screen {
     position: fixed;
