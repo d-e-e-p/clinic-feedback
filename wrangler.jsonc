@@ -1,6 +1,10 @@
+
 {
   "name": "clinic-feedback-wrangler",
   "compatibility_date": "2025-11-01",
+  "site": {
+    "bucket": "./workers-site"
+  },
   "main": "workers-site/index.ts",
   "observability": {
     "logs": {
@@ -11,5 +15,3 @@
     }
   }
 }
-
-
