@@ -86,7 +86,8 @@ container.addEventListener("click", (event) => {
 startButton.addEventListener("click", () => {
   if (selectedConfig) {
     // Navigate to language-specific page
-    window.location.href = `/pages/${selectedConfig.code}.html`;
+    //window.location.href = `/pages/${selectedConfig.code}.html`;
+    window.location.href = `/pages/feedback.html?lang=${selectedConfig.code}`;
   }
 });
 

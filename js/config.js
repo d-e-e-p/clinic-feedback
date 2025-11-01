@@ -55,7 +55,7 @@ const translationsPage = {
     session_ended_redirect:
       "La sesión ha terminado. Redireccionando a la página principal...",
     apiKey:
-      "eyJzb3VsSWQiOiJkZG5hLWJhci1vZi1zb2FwNTY4Zi0tc3VydmV5MSIsImF1dGhTZXJ2ZXIiOiJodHRwczovL2RoLnNvdWxtYWNoaW5lcy5jbG91ZC9hcGkvand0IiwiYXV0aFRva2VuIjoiYXBpa2V5X3YxXzhkMjFmNTgxLTA4Y2UtNDJjNC1hYzkzLTZjZTUxMzFhNmRlOSJ9",
+      "eyJzb3VsSWQiOiJkZG5hLWJhci1vZi1zb2FwNTY4Zi0tZmVlZGJhY2tlcyIsImF1dGhTZXJ2ZXIiOiJodHRwczovL2RoLnNvdWxtYWNoaW5lcy5jbG91ZC9hcGkvand0IiwiYXV0aFRva2VuIjoiYXBpa2V5X3YxXzZjMzk2YTQ3LWVjNjctNGRkMC04MWUwLTc4MmNlMGZjMGRkYyJ9",
   },
   fr: {
     thank_you_title: "Merci pour votre avis !",
