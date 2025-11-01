@@ -77,6 +77,18 @@ async function connect() {
       requiredMediaDevices: { microphone: true, camera: false },
     });
 
+    scene.connectionState.onConnectionStateUpdated.addListener(
+      function (connectionStateData) {
+        console.log(`Stage: ${connectionStateData.name}`);
+        console.log(
+          `Step: ${connectionStateData.currentStep}/${connectionStateData.totalSteps}`,
+        );
+        console.log(
+          `Progress: ${connectionStateData.percentageLoaded.toFixed(1)}%`,
+        );
+      },
+    );
+
     console.log("✓ Scene created:", scene);
 
     console.log("→ Connecting to session...");
