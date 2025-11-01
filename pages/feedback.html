@@ -39,7 +39,6 @@
         const t = translations[langCode] || translations.en;
         
         // Update HTML lang attribute
-        document.documentElement.lang = langCode;
         
         // Update all elements with data-i18n
         document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -54,13 +53,15 @@
         window.currentTranslations = t;
       }
 
+      const urlParams = new URLSearchParams(window.location.search);
+      const lang = urlParams.get('lang') || 'en';
+      document.documentElement.lang = lang;
+      console.log("=== feedback.html ===");
+      console.log('URL Search:', window.location.search);
+      console.log('All params:', Object.fromEntries(urlParams));
+      console.log(`Language: ${lang}`);
+
       document.addEventListener('DOMContentLoaded', () => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const lang = urlParams.get('lang') || 'en';
-        console.log("=== feedback.html ===");
-        console.log('URL Search:', window.location.search);
-        console.log('All params:', Object.fromEntries(urlParams));
-        console.log(`Language: ${lang}`);
         applyTranslations(lang);
     });
       

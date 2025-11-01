@@ -34,6 +34,7 @@ function updateTimer() {
 
 const langCode = document.documentElement.lang; // Get from <html lang>
 const apiKey = apiKeys[langCode];
+console.log(`apikey[${langCode}]: ${apiKey.slice(-10)}`);
 
 // Add error handling
 if (!apiKey) {
@@ -61,7 +62,7 @@ async function disconnectSession() {
 
 async function connect() {
   console.log("→ Connect button clicked");
-  console.log("→ API Key:", apiKey.substring(0, 20) + "...");
+  console.log("→ API Key:", apiKey.substring(0, 10) + "...");
 
   document.getElementById("status").textContent = "connecting...";
 
