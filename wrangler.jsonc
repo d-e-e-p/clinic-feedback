@@ -1,5 +1,5 @@
 {
-  "name": "clinic-feedback-form",
+  "name": "clinic-feedback-wrangler",
   "compatibility_date": "2025-11-01",
   "main": "workers-site/index.ts"
 }
