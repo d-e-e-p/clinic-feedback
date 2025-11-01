@@ -5,7 +5,7 @@ let timerInterval;
 let sessionStartTime;
 const SESSION_DURATION = 3 * 60 * 1000; // 3 minutes in milliseconds
 const REDIRECT_DELAY_MS = 4000;
-// No redirect URL needed for single page app
+const REDIRECT_URL = "/index.html";
 
 function updateTimer() {
   const elapsed = Date.now() - sessionStartTime;
@@ -23,7 +23,12 @@ function updateTimer() {
   // End session when time runs out
   if (remaining <= 0) {
     clearInterval(timerInterval);
-    disconnectSession().then(showThankYouAndReset);
+    disconnectSession().then(() => {
+      document.getElementById("thank-you-screen").style.display = "flex";
+      setTimeout(() => {
+        window.location.href = REDIRECT_URL;
+      }, REDIRECT_DELAY_MS);
+    });
   }
 }
 
@@ -33,7 +38,8 @@ const apiKey = translationsPage[langCode]?.apiKey;
 // Add error handling
 if (!apiKey) {
   console.error("No API key found for language:", langCode);
-  //document.getElementById("status").textContent = "Configuration error - please try again";
+  document.getElementById("status").textContent =
+    "Configuration error - please try again";
   throw new Error("Missing API key for language");
 }
 
@@ -44,7 +50,8 @@ async function disconnectSession() {
     if (scene) {
       await scene.disconnect();
       console.log("✓ Session disconnected");
-      //document.getElementById("status").textContent = "Session ended (time limit reached)";
+      document.getElementById("status").textContent =
+        "Session ended (time limit reached)";
       document.getElementById("timer-display").style.display = "none";
     }
   } catch (error) {
@@ -56,9 +63,8 @@ async function connect() {
   console.log("→ Connect button clicked");
   console.log("→ API Key:", apiKey.substring(0, 20) + "...");
 
-  //document.getElementById("status").textContent = "Connecting...";
+  document.getElementById("status").textContent = "connecting...";
 
-  console.log("→ loading video element...");
   const videoEl = document.getElementById("sm-video");
   console.log("→ Video element:", videoEl);
 
@@ -77,13 +83,13 @@ async function connect() {
     const sessionId = await scene.connect();
     console.log("✓ Connected! Session ID:", sessionId);
 
-    //document.getElementById("status").textContent = "Connection established!";
+    document.getElementById("status").textContent = "connected";
 
     console.log("→ Starting video...");
     const videoState = await scene.startVideo();
     console.log("✓ Video started:", videoState);
 
-    //document.getElementById("status").textContent = "Session active";
+    document.getElementById("status").textContent = "Session active";
 
     // Start the timer
     sessionStartTime = Date.now();
@@ -92,30 +98,30 @@ async function connect() {
     updateTimer(); // Initial update
   } catch (error) {
     console.error("✗ Error:", error);
-    //document.getElementById("status").textContent = "Error: " + error.message;
+    document.getElementById("status").textContent = "Error: " + error.message;
   }
-}
-
-function showThankYouAndReset() {
-  document.getElementById("thank-you-screen").style.display = "flex";
-  setTimeout(() => {
-    // Redirect back to language selection page
-    window.location.href = "/";
-  }, REDIRECT_DELAY_MS);
 }
 
 async function manualDisconnect() {
   clearInterval(timerInterval);
   await disconnectSession();
-  showThankYouAndReset();
+  document.getElementById("thank-you-screen").style.display = "flex";
+  setTimeout(() => {
+    window.location.href = REDIRECT_URL;
+  }, REDIRECT_DELAY_MS);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   console.log("=== DOM READY ===");
-  console.log("✓ Auto-connecting...");
-  connect();
+  console.log("Status div:", document.getElementById("status"));
+  console.log("Video element:", document.getElementById("sm-video"));
+
+  document.getElementById("status").textContent = "Connecting...";
   document
     .getElementById("disconnect-button")
     .addEventListener("click", manualDisconnect);
+
   console.log("✓ Event listeners attached");
+  console.log("✓ Auto-connecting...");
+  connect(); // Auto-initiate connection
 });

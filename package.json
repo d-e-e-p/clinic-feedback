@@ -1,0 +1,9 @@
+{
+  "name": "clinic-feedback",
+  "version": "1.0.0",
+  "description": "Clinic feedback application",
+  "main": "workers-site/index.ts",
+  "dependencies": {
+    "@cloudflare/kv-asset-handler": "^0.3.4"
+  }
+}

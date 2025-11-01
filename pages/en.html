@@ -31,6 +31,15 @@
 
     <script src="/js/config.js"></script>
     <script src="/js/smwebsdk.min.js"></script>
+    <script>
+      // Extract language code from URL path
+      const lang = window.location.pathname
+        .split('/').pop()         // Get filename
+        .replace('.html', '');    // Remove .html extension
+      
+      // Store in sessionStorage for app.js to use
+      sessionStorage.setItem('selectedLang', lang);
+    </script>
     <script src="/js/app.js"></script>
 </body>
 </html>
