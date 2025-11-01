@@ -4,6 +4,6 @@
   "description": "Clinic feedback application",
   "main": "workers-site/index.ts",
   "dependencies": {
-    "@cloudflare/kv-asset-handler": "^0.3.4"
+    "@cloudflare/kv-asset-handler": "^0.4.0"
   }
 }
