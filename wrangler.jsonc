@@ -1,0 +1,5 @@
+{
+  "name": "clinic-feedback-form",
+  "compatibility_date": "2025-11-01",
+  "main": "src/index.ts"
+}
