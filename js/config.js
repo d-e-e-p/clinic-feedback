@@ -41,34 +41,23 @@ const translationsMain = {
   },
 };
 
-const translationsPage = {
+const apiKeys = {
   en: {
-    thank_you_title: "Thank You for Your Feedback!",
-    session_ended_redirect:
-      "This session has ended. Redirecting to the main page...",
     apiKey:
       "eyJzb3VsSWQiOiJkZG5hLWJhci1vZi1zb2FwNTY4Zi0tc3VydmV5MSIsImF1dGhTZXJ2ZXIiOiJodHRwczovL2RoLnNvdWxtYWNoaW5lcy5jbG91ZC9hcGkvand0IiwiYXV0aFRva2VuIjoiYXBpa2V5X3YxXzhkMjFmNTgxLTA4Y2UtNDJjNC1hYzkzLTZjZTUxMzFhNmRlOSJ9",
     //"eyJzb3VsSWQiOiJkZG5hLWJhci1vZi1zb2FwNTY4Zi0tc3VydmV5MSIsImF1dGhTZXJ2ZXIiOiJodHRwczovL2RoLnNvdWxtYWNoaW5lcy5jbG91ZC9hcGkvand0IiwiYXV0aFRva2VuIjoiYXBpa2V5X3YxX2IyNTA0YzljLTY1OTctNDgyYy1hY2E3LTAwYmRiYmZhZDBjZSJ9",
   },
   es: {
-    thank_you_title: "¡Gracias por sus comentarios!",
-    session_ended_redirect:
-      "La sesión ha terminado. Redireccionando a la página principal...",
     apiKey:
       "eyJzb3VsSWQiOiJkZG5hLWJhci1vZi1zb2FwNTY4Zi0tZmVlZGJhY2tlcyIsImF1dGhTZXJ2ZXIiOiJodHRwczovL2RoLnNvdWxtYWNoaW5lcy5jbG91ZC9hcGkvand0IiwiYXV0aFRva2VuIjoiYXBpa2V5X3YxXzZjMzk2YTQ3LWVjNjctNGRkMC04MWUwLTc4MmNlMGZjMGRkYyJ9",
   },
   fr: {
-    thank_you_title: "Merci pour votre avis !",
-    session_ended_redirect:
-      "Cette session est terminée. Redirection vers la page principale...",
     apiKey:
-      "eyJzb3VsSWQiOiJkZG5hLWJhci1vZi1zb2FwNTY4Zi0tc3VydmV5MSIsImF1dGhTZXJ2ZXIiOiJodHRwczovL2RoLnNvdWxtYWNoaW5lcy5jbG91ZC9hcGkvand0IiwiYXV0aFRva2VuIjoiYXBpa2V5X3YxXzhkMjFmNTgxLTA4Y2UtNDJjNC1hYzkzLTZjZTUxMzFhNmRlOSJ9",
+      "eyJzb3VsSWQiOiJkZG5hLWJhci1vZi1zb2FwNTY4Zi0tc3VydmV5MSIsImF1dGhTZXJ2ZXIiOiJodHRwczovL2RoLnNvdWxtYWNoaW5lcy5jbG91ZC9hcGkvand0IiwiYXV0aFRva2VuIjoiYXBpa2V5X3YxX2IyNTA0YzljLTY1OTctNDgyYy1hY2E3LTAwYmRiYmZhZDBjZSJ9",
   },
   zh: {
-    // Chinese (Simplified)
-    thank_you_title: "感谢您的反馈!",
-    session_ended_redirect: "本次会话已结束。正在返回主页...",
+    // local
     apiKey:
-      "eyJzb3VsSWQiOiJkZG5hLWJhci1vZi1zb2FwNTY4Zi0tc3VydmV5MSIsImF1dGhTZXJ2ZXIiOiJodHRwczovL2RoLnNvdWxtYWNoaW5lcy5jbG91ZC9hcGkvand0IiwiYXV0aFRva2VuIjoiYXBpa2V5X3YxXzhkMjFmNTgxLTA4Y2UtNDJjNC1hYzkzLTZjZTUxMzFhNmRlOSJ9",
+      "eyJzb3VsSWQiOiJkZG5hLWJhci1vZi1zb2FwNTY4Zi0tc3VydmV5MSIsImF1dGhTZXJ2ZXIiOiJodHRwczovL2RoLnNvdWxtYWNoaW5lcy5jbG91ZC9hcGkvand0IiwiYXV0aFRva2VuIjoiYXBpa2V5X3YxX2IyNTA0YzljLTY1OTctNDgyYy1hY2E3LTAwYmRiYmZhZDBjZSJ9",
   },
 };

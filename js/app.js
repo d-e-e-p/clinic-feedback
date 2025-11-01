@@ -33,7 +33,7 @@ function updateTimer() {
 }
 
 const langCode = document.documentElement.lang; // Get from <html lang>
-const apiKey = translationsPage[langCode]?.apiKey;
+const apiKey = apiKeys[langCode]?.apiKey;
 
 // Add error handling
 if (!apiKey) {
@@ -86,19 +86,19 @@ async function connect() {
         console.log(
           `Progress: ${connectionStateData.percentageLoaded.toFixed(1)}%`,
         );
-        
+
         // Update progress bar
-        const progressBar = document.getElementById('connection-progress');
+        const progressBar = document.getElementById("connection-progress");
         const currentStep = connectionStateData.currentStep;
         progressBar.value = currentStep + 0.5;
 
         // Show/hide logic
-        if (progressBar.style.display !== 'block') {
-            progressBar.style.display = 'block';
+        if (progressBar.style.display !== "block") {
+          progressBar.style.display = "block";
         }
         if (currentStep === 4) {
-            progressBar.value = 5; // Set to full before hiding
-            progressBar.style.display = 'none';
+          progressBar.value = 5; // Set to full before hiding
+          progressBar.style.display = "none";
         }
       },
     );
