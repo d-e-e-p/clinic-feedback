@@ -87,22 +87,18 @@ async function connect() {
           `Progress: ${connectionStateData.percentageLoaded.toFixed(1)}%`,
         );
         
-        // Show progress bar container
-        const progressContainer = document.getElementById('connection-progress-container');
-        const progressBar = document.getElementById('connection-progress-bar');
-        
-        // Calculate progress percentage (0-4 steps = 0-100%)
-        const progress = (connectionStateData.currentStep / 4) * 100;
-        progressBar.style.width = `${progress}%`;
-        
-        // Show container if not already visible
-        if (progressContainer.style.display !== 'flex') {
-            progressContainer.style.display = 'flex';
+        // Update progress bar
+        const progressBar = document.getElementById('connection-progress');
+        const currentStep = connectionStateData.currentStep;
+        progressBar.value = currentStep + 0.5;
+
+        // Show/hide logic
+        if (progressBar.style.display !== 'block') {
+            progressBar.style.display = 'block';
         }
-        
-        // Hide when complete (step 4 reached)
-        if (connectionStateData.currentStep === 4) {
-            progressContainer.style.display = 'none';
+        if (currentStep === 4) {
+            progressBar.value = 5; // Set to full before hiding
+            progressBar.style.display = 'none';
         }
       },
     );
