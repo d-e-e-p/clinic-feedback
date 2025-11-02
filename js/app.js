@@ -140,6 +140,12 @@ function onSpeechMarker(persona, message) {
 
 function onConversationStateUpdated(conversationState) {
   console.log("→ Conversation state updated:", conversationState);
+  const statusTextEl = document.getElementById("status-text");
+  
+  if (statusTextEl && window.currentTranslations?.conversation_state) {
+    statusTextEl.textContent = 
+      window.currentTranslations.conversation_state[conversationState] || conversationState;
+  }
 }
 
 function onConnectionStateUpdated(connectionStateData) {
