@@ -1,154 +1,179 @@
 console.log("=== APP.JS LOADED ===");
 
-let scene;
+let scene, persona;
 let timerInterval;
 let sessionStartTime;
-const SESSION_DURATION = 3 * 60 * 1000; // 3 minutes in milliseconds
+
+// === CONFIG ===
+const SESSION_DURATION = 3 * 60 * 1000; // 3 minutes
 const REDIRECT_DELAY_MS = 4000;
 const REDIRECT_URL = "/index.html";
 
+// === LANGUAGE + API KEY ===
+const langCode = document.documentElement.lang;
+const apiKey = apiKeys[langCode];
+if (!apiKey) {
+  console.error("✗ Missing API key for language:", langCode);
+  document.getElementById("status").textContent =
+    "Configuration error – please try again";
+  throw new Error("Missing API key");
+}
+console.log(`✓ Using API key for [${langCode}]: ...${apiKey.slice(-10)}`);
+
+// === TIMER HANDLING ===
 function updateTimer() {
   const elapsed = Date.now() - sessionStartTime;
   const remaining = SESSION_DURATION - elapsed;
-  const percentRemaining = (remaining / SESSION_DURATION) * 100;
+  const percent = (remaining / SESSION_DURATION) * 100;
 
-  // Update progress bar
-  document.getElementById("progress-bar").style.width = `${percentRemaining}%`;
+  const progressBar = document.getElementById("progress-bar");
+  const timerText = document.getElementById("timer-text");
 
-  // Update timer text
+  if (progressBar) progressBar.style.width = `${percent}%`;
+
   const seconds = Math.ceil(remaining / 1000);
-  document.getElementById("timer-text").textContent =
-    `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")}`;
+  if (timerText)
+    timerText.textContent = `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")}`;
 
-  // End session when time runs out
+  // End session
   if (remaining <= 0) {
     clearInterval(timerInterval);
     disconnectSession().then(() => {
-      document.getElementById("thank-you-screen").style.display = "flex";
-      setTimeout(() => {
-        window.location.href = REDIRECT_URL;
-      }, REDIRECT_DELAY_MS);
+      showThankYouScreen();
+      setTimeout(
+        () => (window.location.href = REDIRECT_URL),
+        REDIRECT_DELAY_MS,
+      );
     });
   }
 }
 
-const langCode = document.documentElement.lang; // Get from <html lang>
-const apiKey = apiKeys[langCode];
-console.log(`apikey[${langCode}]: ${apiKey.slice(-10)}`);
-
-// Add error handling
-if (!apiKey) {
-  console.error("No API key found for language:", langCode);
-  document.getElementById("status").textContent =
-    "Configuration error - please try again";
-  throw new Error("Missing API key for language");
-}
-
-async function disconnectSession() {
-  console.log("→ Disconnecting session...");
-
-  try {
-    if (scene) {
-      await scene.disconnect();
-      console.log("✓ Session disconnected");
-      document.getElementById("status").textContent =
-        "Session ended (time limit reached)";
-      document.getElementById("timer-display").style.display = "none";
-    }
-  } catch (error) {
-    console.error("✗ Error disconnecting:", error);
-  }
-}
-
+// === SESSION CONTROL ===
 async function connect() {
-  console.log("→ Connect button clicked");
-  console.log("→ API Key:", apiKey.substring(0, 10) + "...");
-
-  document.getElementById("status").textContent = "connecting...";
+  console.log("→ Starting connection process...");
 
   const videoEl = document.getElementById("sm-video");
-  console.log("→ Video element:", videoEl);
+  document.getElementById("status").textContent = "Connecting...";
 
   try {
-    console.log("→ Creating Scene...");
+    // Create scene
     scene = new smwebsdk.Scene({
-      apiKey: apiKey,
+      apiKey,
       videoElement: videoEl,
       requestedMediaDevices: { microphone: true, camera: false },
       requiredMediaDevices: { microphone: true, camera: false },
     });
+    console.log("✓ Scene created");
 
-    scene.connectionState.onConnectionStateUpdated.addListener(
-      function (connectionStateData) {
-        console.log(`Stage: ${connectionStateData.name}`);
-        console.log(
-          `Step: ${connectionStateData.currentStep}/${connectionStateData.totalSteps}`,
-        );
-        console.log(
-          `Progress: ${connectionStateData.percentageLoaded.toFixed(1)}%`,
-        );
+    // Create persona
+    persona = new smwebsdk.Persona(scene, 1);
+    console.log("✓ Persona created");
 
-        // Update progress bar
-        const progressBar = document.getElementById("connection-progress");
-        const currentStep = connectionStateData.currentStep;
-        progressBar.value = currentStep + 0.5;
-
-        // Show/hide logic
-        if (progressBar.style.display !== "block") {
-          progressBar.style.display = "block";
-        }
-        if (currentStep === 4) {
-          progressBar.value = 5; // Set to full before hiding
-          progressBar.style.display = "none";
-        }
-      },
+    // === Event listeners ===
+    persona.onSpeechMarkerEvent.addListener(onSpeechMarker);
+    scene.conversation.onConversationStateUpdated.addListener(
+      onConversationStateUpdated,
     );
+    scene.connectionState.onConnectionStateUpdated.addListener(
+      onConnectionStateUpdated,
+    );
+    scene.conversation.autoClearCards = true;
 
-    console.log("✓ Scene created:", scene);
-
-    console.log("→ Connecting to session...");
+    console.log("→ Connecting to Soul Machines...");
     const sessionId = await scene.connect();
-    console.log("✓ Connected! Session ID:", sessionId);
+    console.log("✓ Connected. Session ID:", sessionId);
 
-    document.getElementById("status").textContent = "connected";
-
-    console.log("→ Starting video...");
-    const videoState = await scene.startVideo();
-    console.log("✓ Video started:", videoState);
-
+    await scene.startVideo();
+    console.log("✓ Video started");
     document.getElementById("status").textContent = "Session active";
 
-    // Start the timer
+    // Start session timer
     sessionStartTime = Date.now();
     document.getElementById("timer-display").style.display = "block";
-    timerInterval = setInterval(updateTimer, 100); // Update every 100ms for smooth animation
-    updateTimer(); // Initial update
-  } catch (error) {
-    console.error("✗ Error:", error);
-    document.getElementById("status").textContent = "Error: " + error.message;
+    timerInterval = setInterval(updateTimer, 100);
+    updateTimer();
+  } catch (err) {
+    console.error("✗ Connection error:", err);
+    document.getElementById("status").textContent = `Error: ${err.message}`;
   }
 }
 
+async function disconnectSession() {
+  console.log("→ Disconnecting session...");
+  try {
+    if (scene) {
+      await scene.disconnect();
+      console.log("✓ Session disconnected");
+      document.getElementById("status").textContent = "Session ended";
+      document.getElementById("timer-display").style.display = "none";
+    }
+  } catch (err) {
+    console.error("✗ Error during disconnect:", err);
+  }
+}
+
+function showThankYouScreen() {
+  document.getElementById("thank-you-screen").style.display = "flex";
+}
+
+// === EVENT HANDLERS ===
+function onSpeechMarker(persona, message) {
+  const markerType = message.name;
+  const cardIds = message.arguments || [];
+
+  console.log(`→ Speech marker: ${markerType}`, cardIds);
+
+  switch (markerType) {
+    case "hidecards":
+      if (cardIds.length === 0) console.log("→ Hiding all cards");
+      else console.log("→ Hiding specific cards:", cardIds);
+      break;
+
+    case "showcards":
+      console.log("→ Showing cards:", cardIds);
+      break;
+
+    default:
+      console.warn("→ Unknown marker type:", markerType);
+  }
+}
+
+function onConversationStateUpdated(conversationState) {
+  console.log("→ Conversation state updated:", conversationState);
+}
+
+function onConnectionStateUpdated(connectionStateData) {
+  console.log(`Stage: ${connectionStateData.name}`);
+  console.log(
+    `Progress: ${connectionStateData.currentStep}/${connectionStateData.totalSteps} (${connectionStateData.percentageLoaded.toFixed(1)}%)`,
+  );
+
+  const progressBar = document.getElementById("connection-progress");
+  progressBar.style.display = "block";
+  progressBar.value = connectionStateData.currentStep + 0.5;
+
+  if (connectionStateData.currentStep === 4) {
+    progressBar.value = 5;
+    progressBar.style.display = "none";
+  }
+}
+
+// === UI ===
 async function manualDisconnect() {
   clearInterval(timerInterval);
   await disconnectSession();
-  document.getElementById("thank-you-screen").style.display = "flex";
-  setTimeout(() => {
-    window.location.href = REDIRECT_URL;
-  }, REDIRECT_DELAY_MS);
+  showThankYouScreen();
+  setTimeout(() => (window.location.href = REDIRECT_URL), REDIRECT_DELAY_MS);
 }
 
+// === INIT ===
 document.addEventListener("DOMContentLoaded", () => {
   console.log("=== DOM READY ===");
-  console.log("Status div:", document.getElementById("status"));
-  console.log("Video element:", document.getElementById("sm-video"));
-
-  document.getElementById("status").textContent = "Connecting...";
   document
     .getElementById("disconnect-button")
     .addEventListener("click", manualDisconnect);
-
   console.log("✓ Event listeners attached");
-  console.log("✓ Auto-connecting...");
-  connect(); // Auto-initiate connection
+  connect(); // auto-connect
+  persona.startSpeaking("xyz this is a test!");
 });
+
