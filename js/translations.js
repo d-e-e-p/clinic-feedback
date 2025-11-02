@@ -7,7 +7,7 @@ const translations = {
     session_ended_redirect: "This session has ended. Redirecting...",
     timer_label: "Time Remaining",
     conversation_state: {
-      idle: "idle",
+      idle: "listening",
       dpSpeaking: "speaking",
       dpProcessing: "processing",
       userTalking: "listening",
@@ -22,7 +22,7 @@ const translations = {
     timer_label: "Tiempo Restante",
     conversation_state: {
       // Technical/UI translations for conversation states
-      idle: "inactivo", // 'Idle' as in not active
+      idle: "escuchando", // 'Idle' as in not active
       dpSpeaking: "hablando", // 'Speaking'
       dpProcessing: "procesando", // 'Processing'
       userTalking: "escuchando", // 'Listening'
@@ -37,7 +37,7 @@ const translations = {
     timer_label: "Temps Restant",
     conversation_state: {
       // Technical/UI translations for conversation states
-      idle: "inactif", // 'Idle' as in not active
+      idle: "écoute", // 'Idle' as in not active
       dpSpeaking: "parole", // 'Speaking' (as in "taking the floor/turn to speak")
       dpProcessing: "traitement", // 'Processing'
       userTalking: "écoute", // 'Listening' (as in "in a listening state")
@@ -52,10 +52,11 @@ const translations = {
     timer_label: "剩余时间",
     conversation_state: {
       // Technical/UI translations for conversation states
-      idle: "空闲", // 'Idle' as in not busy
+      idle: "听取中", // 'Idle' as in not busy
       dpSpeaking: "说话中", // 'Speaking'
       dpProcessing: "处理中", // 'Processing'
       userTalking: "听取中", // 'Listening' (or 正在倾听 for a more active listen)
     },
   },
 };
+
