@@ -69,6 +69,35 @@ async function connect() {
     persona = new smwebsdk.Persona(scene, 1);
     console.log("✓ Persona created");
 
+    // USER SPEECH RECOGNITION
+    scene.onRecognizeResultsEvent.addListener(
+      (sceneObj, status, errorMessage, results) => {
+        const result = results?.[0];
+        if (!result) return;
+
+        const userSpeech = result.alternatives?.[0]?.transcript;
+        if (!userSpeech) return;
+
+        // Only record final text
+        if (result.final === true) {
+          console.log("[PATIENT] :", userSpeech);
+        }
+      },
+    );
+
+    // PERSONA SPOKEN OUTPUT
+    scene.onStateEvent.addListener((sceneObj, event) => {
+      const personaState = event.persona?.["1"];
+      if (!personaState) return;
+
+      if (personaState.speechState === "speaking") {
+        const personaSpeech = personaState.currentSpeech;
+        if (!personaSpeech) return;
+
+        console.log("[LISTENER]", personaSpeech);
+      }
+    });
+
     // === Event listeners ===
     persona.onSpeechMarkerEvent.addListener(onSpeechMarker);
     scene.conversation.onConversationStateUpdated.addListener(
@@ -141,10 +170,11 @@ function onSpeechMarker(persona, message) {
 function onConversationStateUpdated(conversationState) {
   console.log("→ Conversation state updated:", conversationState);
   const statusTextEl = document.getElementById("status-text");
-  
+
   if (statusTextEl && window.currentTranslations?.conversation_state) {
-    statusTextEl.textContent = 
-      window.currentTranslations.conversation_state[conversationState] || conversationState;
+    statusTextEl.textContent =
+      window.currentTranslations.conversation_state[conversationState] ||
+      conversationState;
   }
 }
 
@@ -182,4 +212,3 @@ document.addEventListener("DOMContentLoaded", () => {
   connect(); // auto-connect
   persona.startSpeaking("xyz this is a test!");
 });
-
