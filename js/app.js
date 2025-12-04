@@ -81,6 +81,7 @@ async function connect() {
         // Only record final text
         if (result.final === true) {
           console.log("[PATIENT] :", userSpeech);
+          addCaptionEntry('patient', userSpeech);
         }
       },
     );
@@ -95,6 +96,7 @@ async function connect() {
         if (!personaSpeech) return;
 
         console.log("[LISTENER]", personaSpeech);
+        addCaptionEntry('listener', personaSpeech);
       }
     });
 
@@ -195,6 +197,16 @@ function onConnectionStateUpdated(connectionStateData) {
 }
 
 // === UI ===
+function addCaptionEntry(speaker, text) {
+  const container = document.getElementById('captions-scroll');
+  const entry = document.createElement('div');
+  entry.className = `caption-entry ${speaker}-caption`;
+  entry.textContent = `[${speaker.toUpperCase()}] ${text}`;
+  container.appendChild(entry);
+  // Auto-scroll to bottom
+  container.scrollTop = container.scrollHeight;
+}
+
 async function manualDisconnect() {
   clearInterval(timerInterval);
   await disconnectSession();

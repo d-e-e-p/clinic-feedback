@@ -18,7 +18,7 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 75%;
     height: 100%;
     object-fit: cover; /* Ensure video fills screen */
     z-index: 1; /* Base layer */
@@ -196,5 +196,35 @@ button {
 #thank-you-screen p {
     font-size: 1.5rem;
     margin-bottom: 40px;
+}
+
+/* Captions Gutter */
+#captions-container {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 25%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 2;
+  padding: 20px;
+  box-sizing: border-box;
+  color: white;
+}
+#captions-scroll {
+  height: calc(100% - 40px);
+  overflow-y: auto;
+}
+.caption-entry {
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+}
+.patient-caption {
+  color: #ff7b7b; /* Red tint for patient */
+}
+.listener-caption {
+  color: #90ee90; /* Green tint for listener */
 }
 
