@@ -240,6 +240,7 @@ function fuzzyMatchText(text) {
 
     if (results.length > 0) {
       console.log("text: ", text, "results: ", results);
+    }
 
     // Return first match that meets confidence threshold
     if (
