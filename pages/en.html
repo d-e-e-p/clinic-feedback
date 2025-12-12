@@ -44,6 +44,8 @@
       if (typeof Fuse === 'undefined') {
         console.error('Fuse.js not loaded! Check path:', document.querySelector('script[src*="fuse.min.js"]').src);
         throw new Error('Missing Fuse.js');
+      } else {
+        console.log('Fuse.js is loaded! path:', document.querySelector('script[src*="fuse.min.js"]').src);
       }
 
       // Make translations globally accessible
