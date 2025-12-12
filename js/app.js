@@ -20,7 +20,7 @@ const FUZZY_SEARCH_OPTIONS = {
 // === LANGUAGE + API KEY ===
 const langCode = document.documentElement.lang;
 const apiKey = apiKeys[langCode];
-const translations = translationsMain[langCode];
+const stages = translationsMain[langCode].stages;
 
 if (!apiKey) {
   console.error("✗ Missing API key for language:", langCode);
@@ -207,9 +207,9 @@ function onConnectionStateUpdated(connectionStateData) {
 }
 
 function fuzzyMatchText(text) {
-  const fuse = new Fuse(translations.questions, FUZZY_SEARCH_OPTIONS);
+  const fuse = new Fuse(stages, FUZZY_SEARCH_OPTIONS);
   const results = fuse.search(text);
-  console.log("results: ", results);
+  console.log("results:", results);
 
   // Return first match that meets confidence threshold
   if (

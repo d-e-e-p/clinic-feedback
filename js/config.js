@@ -8,7 +8,7 @@ const translationsMain = {
     surveyLink: "/pages/en.html",
     backgroundColor: "#368dda",
     emoji: "🇺🇸",
-    questions: [
+    stages: [
       "Thank you for visiting the clinic today.",
       "First, how did you find your care services today?",
       "How could we provide better services next time?",
@@ -26,7 +26,7 @@ const translationsMain = {
     surveyLink: "/pages/es.html",
     backgroundColor: "#2ecc71",
     emoji: "🇪🇸",
-    questions: [
+    stages: [
       "Gracias por visitar la clínica hoy.",
       "Primero, ¿cómo encontró los servicios de atención hoy?",
       "¿Cómo podríamos brindar mejores servicios la próxima vez?",
@@ -44,7 +44,7 @@ const translationsMain = {
     surveyLink: "/pages/fr.html",
     backgroundColor: "#e74c3c",
     emoji: "🇫🇷",
-    questions: [
+    stages: [
       "Merci d'avoir visité la clinique aujourd'hui.",
       "Tout d'abord, comment avez-vous trouvé vos services de soins aujourd'hui ?",
       "Comment pourrions-nous offrir de meilleurs services la prochaine fois ?",
@@ -62,7 +62,7 @@ const translationsMain = {
     surveyLink: "/pages/zh.html",
     backgroundColor: "#f1c40f",
     emoji: "🇨🇳",
-    questions: [
+    stages: [
       "感谢您今天来访本诊所。",
       "首先，您今天对我们的护理服务感觉如何？",
       "下次我们怎样才能提供更好的服务？",
