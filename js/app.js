@@ -1,6 +1,6 @@
 console.log("=== APP.JS LOADED ===");
 
-if (typeof window.Fuse === 'undefined') {
+if (typeof Fuse === 'undefined') {
   console.error('Fuse.js not loaded!');
   document.getElementById("status").textContent = "System error - please reload";
   throw new Error('Missing Fuse.js dependency');
@@ -219,7 +219,7 @@ function fuzzyMatchText(text) {
   }
 
   try {
-    const fuse = new window.Fuse(stages, FUZZY_SEARCH_OPTIONS);
+    const fuse = new Fuse(stages, FUZZY_SEARCH_OPTIONS);
     const results = fuse.search(text);
     console.log("results:", results);
 
