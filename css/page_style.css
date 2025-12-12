@@ -135,6 +135,26 @@ button {
     text-align: center;
 }
 
+#image-caption-container {
+    position: fixed;
+    bottom: 120px; /* Above disconnect button */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 4; /* Higher than controls */
+    max-width: 80%;
+    max-height: 200px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 8px;
+    padding: 10px;
+    display: none; /* Hidden by default */
+}
+
+#caption-image {
+    max-height: 180px;
+    max-width: 100%;
+    object-fit: contain;
+}
+
 /* Connection Progress Bar */
 #connection-progress {
     --w: 70%;

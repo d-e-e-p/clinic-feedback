@@ -12,6 +12,11 @@ const REDIRECT_URL = "/index.html";
 // === LANGUAGE + API KEY ===
 const langCode = document.documentElement.lang;
 const apiKey = apiKeys[langCode];
+
+// === pattern ===
+const mdImageLinkPattern =
+  /^\[([^\]]+)\]\((https?:\/\/[^\s)]+\.(png|jpg|jpeg|gif|webp|svg))\)$/i;
+
 if (!apiKey) {
   console.error("✗ Missing API key for language:", langCode);
   document.getElementById("status").textContent =
@@ -81,7 +86,7 @@ async function connect() {
         // Only record final text
         if (result.final === true) {
           console.log("[PATIENT] :", userSpeech);
-          addCaptionEntry('patient', userSpeech);
+          addCaptionEntry("patient", userSpeech);
         }
       },
     );
@@ -96,7 +101,7 @@ async function connect() {
         if (!personaSpeech) return;
 
         console.log("[LISTENER]", personaSpeech);
-        addCaptionEntry('listener', personaSpeech);
+        addCaptionEntry("listener", personaSpeech);
       }
     });
 
@@ -198,8 +203,30 @@ function onConnectionStateUpdated(connectionStateData) {
 
 // === UI ===
 function addCaptionEntry(speaker, text) {
-  const container = document.getElementById('captions-scroll');
-  const entry = document.createElement('div');
+  // look for something like:
+  // [Question 1](https://clinicfeedback.org/images/q1.png)
+  const match = text.match(mdImageLinkPattern);
+  if (match) {
+    const alt = match[1];
+    const url = match[2];
+
+    // SHOW IMAGE
+    const imgContainer = document.getElementById("image-caption-container");
+    const imgElement = document.getElementById("caption-image");
+    imgElement.src = url;
+    imgElement.alt = alt;
+    imgContainer.style.display = "block";
+
+    // Auto-hide after 5 seconds
+    setTimeout(() => {
+      imgContainer.style.display = "none";
+    }, 5000);
+
+    return;
+  }
+
+  const container = document.getElementById("captions-scroll");
+  const entry = document.createElement("div");
   entry.className = `caption-entry ${speaker}-caption`;
   entry.textContent = `[${speaker.toUpperCase()}] ${text}`;
   container.appendChild(entry);
