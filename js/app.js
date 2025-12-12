@@ -266,6 +266,7 @@ function fuzzyMatchText(text) {
 function addCaptionEntry(speaker, text) {
   // look for something like:
   const num = fuzzyMatchText(text);
+  console.log("num: ", num);
   if (num) {
     // [Question 1](https://clinicfeedback.org/images/q1.png)
     const alt = "question " + num;
