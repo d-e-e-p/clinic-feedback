@@ -26,7 +26,7 @@ const REDIRECT_URL = "/index.html";
 // Add Fuse.js configuration at the top with other configs
 const FUZZY_SEARCH_OPTIONS = {
   includeScore: true,
-  threshold: 0.4, // Allows for some typos/partial matches
+  threshold: 0.2, // Allows for some typos/partial matches
   ignoreLocation: true, // Look for matches anywhere in the string
   useExtendedSearch: true,
 };
@@ -253,13 +253,8 @@ function fuzzyMatchText(text) {
       typeof results[0].score === "number" &&
       results[0].score <= FUZZY_SEARCH_OPTIONS.threshold
     ) {
-      // Find the index of the matched question text inside stages
-      const matchedText = results[0].item;
-      const index = stages.indexOf(matchedText);
-
-      return index >= 0 ? index : null;
+      return results.refIndex;
     }
-
     return null;
   } catch (err) {
     console.error("Fuzzy match error:", err);

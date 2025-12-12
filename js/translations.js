@@ -13,7 +13,7 @@ const translations = {
       userTalking: "listening",
     },
     stages: [
-      "Thank you for visiting the clinic today.",
+      "Hello, Thank you for visiting the clinic today.",
       "First, how did you find your care services today?",
       "How could we provide better services next time?",
       "What do you like most about the Harvard Medicine Family Van?",
@@ -87,4 +87,3 @@ const translations = {
     ],
   },
 };
-
