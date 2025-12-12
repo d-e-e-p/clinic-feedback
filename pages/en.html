@@ -37,8 +37,12 @@
 
     <script src="/js/config.js"></script>
     <script src="/js/translations.js"></script>
-    <script src="/js/smwebsdk.min.js"></script>
     <script src="../js/fuse.min.js"></script>
+    <script>
+      // Make Fuse globally available
+      window.Fuse = Fuse$1;
+    </script>
+    <script src="/js/smwebsdk.min.js"></script>
     <script>
       // Make translations globally accessible
       window.translations = translations;

@@ -1,6 +1,6 @@
 console.log("=== APP.JS LOADED ===");
 
-if (typeof Fuse === 'undefined') {
+if (typeof window.Fuse === 'undefined') {
   console.error('Fuse.js not loaded!');
   document.getElementById("status").textContent = "System error - please reload";
   throw new Error('Missing Fuse.js dependency');
@@ -219,7 +219,7 @@ function fuzzyMatchText(text) {
   }
 
   try {
-    const fuse = new Fuse(stages, FUZZY_SEARCH_OPTIONS);
+    const fuse = new window.Fuse(stages, FUZZY_SEARCH_OPTIONS);
     const results = fuse.search(text);
     console.log("results:", results);
 
@@ -281,5 +281,4 @@ document.addEventListener("DOMContentLoaded", () => {
     .addEventListener("click", manualDisconnect);
   console.log("✓ Event listeners attached");
   connect(); // auto-connect
-  persona.startSpeaking("xyz this is a test!");
 });
