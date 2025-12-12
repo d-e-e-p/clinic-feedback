@@ -207,10 +207,9 @@ function onConnectionStateUpdated(connectionStateData) {
 }
 
 function fuzzyMatchText(text) {
-  if (!translations?.questions?.length) return null;
-
   const fuse = new Fuse(translations.questions, FUZZY_SEARCH_OPTIONS);
   const results = fuse.search(text);
+  console.log("results: ", results);
 
   // Return first match that meets confidence threshold
   if (
