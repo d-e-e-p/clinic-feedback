@@ -9,13 +9,18 @@ const SESSION_DURATION = 3 * 60 * 1000; // 3 minutes
 const REDIRECT_DELAY_MS = 4000;
 const REDIRECT_URL = "/index.html";
 
+// Add Fuse.js configuration at the top with other configs
+const FUZZY_SEARCH_OPTIONS = {
+  includeScore: true,
+  threshold: 0.3, // Allows for some typos/partial matches
+  ignoreLocation: true, // Look for matches anywhere in the string
+  useExtendedSearch: true,
+};
+
 // === LANGUAGE + API KEY ===
 const langCode = document.documentElement.lang;
 const apiKey = apiKeys[langCode];
-
-// === pattern ===
-const mdImageLinkPattern =
-  /^\[([^\]]+)\]\((https?:\/\/[^\s)]+\.(png|jpg|jpeg|gif|webp|svg))\)$/i;
+const translations = translationsMain[langCode];
 
 if (!apiKey) {
   console.error("✗ Missing API key for language:", langCode);
@@ -201,14 +206,30 @@ function onConnectionStateUpdated(connectionStateData) {
   }
 }
 
+function fuzzyMatchText(text) {
+  if (!translations?.questions?.length) return null;
+
+  const fuse = new Fuse(translations.questions, FUZZY_SEARCH_OPTIONS);
+  const results = fuse.search(text);
+
+  // Return first match that meets confidence threshold
+  if (
+    results.length > 0 &&
+    results[0].score <= FUZZY_SEARCH_OPTIONS.threshold
+  ) {
+    return results[0].refIndex; // Returns the original question index
+  }
+  return null;
+}
+
 // === UI ===
 function addCaptionEntry(speaker, text) {
   // look for something like:
-  // [Question 1](https://clinicfeedback.org/images/q1.png)
-  const match = text.match(mdImageLinkPattern);
-  if (match) {
-    const alt = match[1];
-    const url = match[2];
+  const num = fuzzyMatchText(text);
+  if (num) {
+    // [Question 1](https://clinicfeedback.org/images/q1.png)
+    const alt = "question " + num;
+    const url = "https://clinicfeedback.org/images/q" + num + ".png";
 
     // SHOW IMAGE
     const imgContainer = document.getElementById("image-caption-container");
@@ -216,11 +237,7 @@ function addCaptionEntry(speaker, text) {
     imgElement.src = url;
     imgElement.alt = alt;
     imgContainer.style.display = "block";
-
-    // Auto-hide after 5 seconds
-    setTimeout(() => {
-      imgContainer.style.display = "none";
-    }, 5000);
+    console.log(`loading image ${imgElement}`);
 
     return;
   }

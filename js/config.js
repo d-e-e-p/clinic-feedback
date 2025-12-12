@@ -6,9 +6,17 @@ const translationsMain = {
     code: "en",
     buttonText: "Start",
     surveyLink: "/pages/en.html",
-    backgroundColor: "#368dda", // Blue
+    backgroundColor: "#368dda",
     emoji: "🇺🇸",
+    questions: [
+      "Thank you for visiting the clinic today.",
+      "First, how did you find your care services today?",
+      "How could we provide better services next time?",
+      "What do you like most about the Harvard Medicine Family Van?",
+      "Is there anything else you'd like to share with us?",
+    ],
   },
+
   spanish: {
     name: "Español",
     title: "Comentarios de la Clínica",
@@ -16,9 +24,17 @@ const translationsMain = {
     code: "es",
     buttonText: "Comenzar",
     surveyLink: "/pages/es.html",
-    backgroundColor: "#2ecc71", // Green
+    backgroundColor: "#2ecc71",
     emoji: "🇪🇸",
+    questions: [
+      "Gracias por visitar la clínica hoy.",
+      "Primero, ¿cómo encontró los servicios de atención hoy?",
+      "¿Cómo podríamos brindar mejores servicios la próxima vez?",
+      "¿Qué es lo que más le gusta de la Harvard Medicine Family Van?",
+      "¿Hay algo más que le gustaría compartir con nosotros?",
+    ],
   },
+
   french: {
     name: "Français",
     title: "Avis de la Clinique",
@@ -26,9 +42,17 @@ const translationsMain = {
     code: "fr",
     buttonText: "Commencer",
     surveyLink: "/pages/fr.html",
-    backgroundColor: "#e74c3c", // Red
+    backgroundColor: "#e74c3c",
     emoji: "🇫🇷",
+    questions: [
+      "Merci d'avoir visité la clinique aujourd'hui.",
+      "Tout d'abord, comment avez-vous trouvé vos services de soins aujourd'hui ?",
+      "Comment pourrions-nous offrir de meilleurs services la prochaine fois ?",
+      "Qu'appréciez-vous le plus dans le Harvard Medicine Family Van ?",
+      "Y a-t-il autre chose que vous aimeriez partager avec nous ?",
+    ],
   },
+
   chinese: {
     name: "中文 (Zhōngwén)",
     title: "诊所反馈",
@@ -36,8 +60,15 @@ const translationsMain = {
     code: "zh",
     buttonText: "开始",
     surveyLink: "/pages/zh.html",
-    backgroundColor: "#f1c40f", // Yellow
+    backgroundColor: "#f1c40f",
     emoji: "🇨🇳",
+    questions: [
+      "感谢您今天来访本诊所。",
+      "首先，您今天对我们的护理服务感觉如何？",
+      "下次我们怎样才能提供更好的服务？",
+      "您最喜欢哈佛医学院家庭车的哪些方面？",
+      "您还有什么想与我们分享的吗？",
+    ],
   },
 };
 
