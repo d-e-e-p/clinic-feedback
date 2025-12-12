@@ -28,7 +28,7 @@ const FUZZY_SEARCH_OPTIONS = {
 
 // === LANGUAGE + API KEY ===
 const langCode = document.documentElement.lang;
-const apiKey = window.apiKeys[langCode];  // Use window.apiKeys
+const apiKey = apiKeys[langCode]; // Access global apiKeys directly
 const translationsForLang = window.translations?.[langCode] || {};
 const stages = translationsForLang.stages || [];
 
