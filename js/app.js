@@ -230,8 +230,13 @@ function onConnectionStateUpdated(connectionStateData) {
 }
 
 function fuzzyMatchText(text) {
-  if (!stages?.length) {
+  if (!stages || !Array.isArray(stages) || stages.length === 0) {
     console.error("No stages loaded for language:", langCode);
+    return null;
+  }
+
+  if (!fuse) {
+    console.error("Fuse instance not initialized");
     return null;
   }
 
@@ -239,16 +244,22 @@ function fuzzyMatchText(text) {
     const results = fuse.search(text);
 
     if (results.length > 0) {
-      console.log("text: ", text, "results: ", results);
+      console.log("Fuzzy input:", text, " → Results:", results);
     }
 
-    // Return first match that meets confidence threshold
+    // Validate first result
     if (
       results.length > 0 &&
+      typeof results[0].score === "number" &&
       results[0].score <= FUZZY_SEARCH_OPTIONS.threshold
     ) {
-      return results[0].refIndex; // Returns the original question index
+      // Find the index of the matched question text inside stages
+      const matchedText = results[0].item;
+      const index = stages.indexOf(matchedText);
+
+      return index >= 0 ? index : null;
     }
+
     return null;
   } catch (err) {
     console.error("Fuzzy match error:", err);
