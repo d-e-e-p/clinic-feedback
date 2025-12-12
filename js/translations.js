@@ -58,8 +58,7 @@ const translations = {
     },
     stages: [
       "Merci d'avoir visité la clinique aujourd'hui.",
-      "Tout d'abord, comment avez-vous trouvé vos services de soins aujourd'hui
-?",
+      "Tout d'abord, comment avez-vous trouvé vos services de soins aujourd'hui ?",
       "Comment pourrions-nous offrir de meilleurs services la prochaine fois ?",
       "Qu'appréciez-vous le plus dans le Harvard Medicine Family Van ?",
       "Y a-t-il autre chose que vous aimeriez partager avec nous ?",
