@@ -19,8 +19,8 @@ const FUZZY_SEARCH_OPTIONS = {
 
 // === LANGUAGE + API KEY ===
 const langCode = document.documentElement.lang;
-const apiKey = apiKeys[langCode];
-const stages = translations[langCode].stages;
+const apiKey = window.apiKeys[langCode];  // Use window.apiKeys
+const stages = window.translations[langCode].stages;  // Use window.translations
 
 if (!apiKey) {
   console.error("✗ Missing API key for language:", langCode);
