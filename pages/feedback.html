@@ -39,6 +39,9 @@
     <script src="/js/smwebsdk.min.js"></script>
     <script src="/js/fuse.min.js" data-source="fuse-library"></script>
     <script>
+      window.translations = translations;
+      window.apiKeys = apiKeys;
+
       if (typeof Fuse === 'undefined') {
         console.error('Fuse missing in feedback.html! Scripts:',
           Array.from(document.scripts).map(s => s.src)

@@ -29,7 +29,14 @@ const FUZZY_SEARCH_OPTIONS = {
 // === LANGUAGE + API KEY ===
 const langCode = document.documentElement.lang;
 const apiKey = window.apiKeys[langCode];  // Use window.apiKeys
-const stages = window.translations[langCode].stages;  // Use window.translations
+const translationsForLang = window.translations?.[langCode] || {};
+const stages = translationsForLang.stages || [];
+
+if (!stages.length) {
+  console.error("No stages found for language:", langCode);
+  document.getElementById("status").textContent = "Configuration error - missing questions";
+  throw new Error("Missing stage definitions");
+}
 
 if (!apiKey) {
   console.error("✗ Missing API key for language:", langCode);
