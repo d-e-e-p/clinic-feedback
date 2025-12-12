@@ -37,7 +37,15 @@
     <script src="/js/config.js"></script>
     <script src="/js/translations.js"></script>
     <script src="/js/smwebsdk.min.js"></script>
+    <script src="/js/fuse.min.js" data-source="fuse-library"></script>
     <script>
+      if (typeof Fuse === 'undefined') {
+        console.error('Fuse missing in feedback.html! Scripts:',
+          Array.from(document.scripts).map(s => s.src)
+        );
+        throw new Error('Missing Fuse.js in feedback.html');
+      }
+
       // Extract language from URL parameter
       
       // Apply translations
@@ -72,7 +80,6 @@
     });
       
     </script>
-    <script src="/js/fuse.min.js"></script>
-    <script src="/js/app.js"></script>
+    <script src="/js/app.js" data-source="main-app"></script>
 </body>
 </html>

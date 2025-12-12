@@ -1,7 +1,10 @@
-console.log("=== APP.JS LOADED ===");
+console.log("=== APP.JS LOADED FROM:", document.currentScript?.src || "inline script");
+console.log("Fuse available?", typeof Fuse !== 'undefined' ? "YES" : "NO");
 
 if (typeof Fuse === 'undefined') {
-  console.error('Fuse.js not loaded!');
+  console.error('Fuse.js not loaded! Loaded scripts:',
+    Array.from(document.scripts).map(s => s.src)
+  );
   document.getElementById("status").textContent = "System error - please reload";
   throw new Error('Missing Fuse.js dependency');
 }

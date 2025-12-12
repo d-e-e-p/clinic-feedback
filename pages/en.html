@@ -38,7 +38,7 @@
     <script src="/js/config.js"></script>
     <script src="/js/translations.js"></script>
     <script src="/js/smwebsdk.min.js"></script>
-    <script src="/js/fuse.min.js"></script>
+    <script src="/js/fuse.min.js" data-source="fuse-library"></script>
     <script>
       // Add this right after loading fuse.min.js
       if (typeof Fuse === 'undefined') {
@@ -56,6 +56,6 @@
       const lang = window.location.pathname.split('/').pop().replace('.html', '');
       sessionStorage.setItem('selectedLang', lang);
     </script>
-    <script src="/js/app.js"></script>
+    <script src="/js/app.js" data-source="main-app"></script>
 </body>
 </html>
