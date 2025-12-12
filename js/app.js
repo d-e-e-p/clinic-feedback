@@ -1,12 +1,17 @@
-console.log("=== APP.JS LOADED FROM:", document.currentScript?.src || "inline script");
-console.log("Fuse available?", typeof Fuse !== 'undefined' ? "YES" : "NO");
+console.log(
+  "=== APP.JS LOADED FROM:",
+  document.currentScript?.src || "inline script",
+);
+console.log("Fuse available?", typeof Fuse !== "undefined" ? "YES" : "NO");
 
-if (typeof Fuse === 'undefined') {
-  console.error('Fuse.js not loaded! Loaded scripts:',
-    Array.from(document.scripts).map(s => s.src)
+if (typeof Fuse === "undefined") {
+  console.error(
+    "Fuse.js not loaded! Loaded scripts:",
+    Array.from(document.scripts).map((s) => s.src),
   );
-  document.getElementById("status").textContent = "System error - please reload";
-  throw new Error('Missing Fuse.js dependency');
+  document.getElementById("status").textContent =
+    "System error - please reload";
+  throw new Error("Missing Fuse.js dependency");
 }
 
 let scene, persona;
@@ -21,10 +26,11 @@ const REDIRECT_URL = "/index.html";
 // Add Fuse.js configuration at the top with other configs
 const FUZZY_SEARCH_OPTIONS = {
   includeScore: true,
-  threshold: 0.3, // Allows for some typos/partial matches
+  threshold: 0.1, // Allows for some typos/partial matches
   ignoreLocation: true, // Look for matches anywhere in the string
   useExtendedSearch: true,
 };
+const fuse = new Fuse(stages, FUZZY_SEARCH_OPTIONS);
 
 // === LANGUAGE + API KEY ===
 const langCode = document.documentElement.lang;
@@ -34,7 +40,8 @@ const stages = translationsForLang.stages || [];
 
 if (!stages.length) {
   console.error("No stages found for language:", langCode);
-  document.getElementById("status").textContent = "Configuration error - missing questions";
+  document.getElementById("status").textContent =
+    "Configuration error - missing questions";
   throw new Error("Missing stage definitions");
 }
 
@@ -224,14 +231,15 @@ function onConnectionStateUpdated(connectionStateData) {
 
 function fuzzyMatchText(text) {
   if (!stages?.length) {
-    console.error('No stages loaded for language:', langCode);
+    console.error("No stages loaded for language:", langCode);
     return null;
   }
 
   try {
-    const fuse = new Fuse(stages, FUZZY_SEARCH_OPTIONS);
     const results = fuse.search(text);
-    console.log("results:", results);
+
+    if (results.length > 0) {
+      console.log("text: ", text, "results: ", results);
 
     // Return first match that meets confidence threshold
     if (
@@ -242,7 +250,7 @@ function fuzzyMatchText(text) {
     }
     return null;
   } catch (err) {
-    console.error('Fuzzy match error:', err);
+    console.error("Fuzzy match error:", err);
     return null;
   }
 }
