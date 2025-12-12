@@ -1,5 +1,11 @@
 console.log("=== APP.JS LOADED ===");
 
+if (typeof Fuse === 'undefined') {
+  console.error('Fuse.js not loaded!');
+  document.getElementById("status").textContent = "System error - please reload";
+  throw new Error('Missing Fuse.js dependency');
+}
+
 let scene, persona;
 let timerInterval;
 let sessionStartTime;
@@ -207,18 +213,28 @@ function onConnectionStateUpdated(connectionStateData) {
 }
 
 function fuzzyMatchText(text) {
-  const fuse = new Fuse(stages, FUZZY_SEARCH_OPTIONS);
-  const results = fuse.search(text);
-  console.log("results:", results);
-
-  // Return first match that meets confidence threshold
-  if (
-    results.length > 0 &&
-    results[0].score <= FUZZY_SEARCH_OPTIONS.threshold
-  ) {
-    return results[0].refIndex; // Returns the original question index
+  if (!stages?.length) {
+    console.error('No stages loaded for language:', langCode);
+    return null;
   }
-  return null;
+
+  try {
+    const fuse = new Fuse(stages, FUZZY_SEARCH_OPTIONS);
+    const results = fuse.search(text);
+    console.log("results:", results);
+
+    // Return first match that meets confidence threshold
+    if (
+      results.length > 0 &&
+      results[0].score <= FUZZY_SEARCH_OPTIONS.threshold
+    ) {
+      return results[0].refIndex; // Returns the original question index
+    }
+    return null;
+  } catch (err) {
+    console.error('Fuzzy match error:', err);
+    return null;
+  }
 }
 
 // === UI ===
