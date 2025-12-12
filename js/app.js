@@ -30,7 +30,6 @@ const FUZZY_SEARCH_OPTIONS = {
   ignoreLocation: true, // Look for matches anywhere in the string
   useExtendedSearch: true,
 };
-const fuse = new Fuse(stages, FUZZY_SEARCH_OPTIONS);
 
 // === LANGUAGE + API KEY ===
 const langCode = document.documentElement.lang;
@@ -44,6 +43,7 @@ if (!stages.length) {
     "Configuration error - missing questions";
   throw new Error("Missing stage definitions");
 }
+const fuse = new Fuse(stages, FUZZY_SEARCH_OPTIONS);
 
 if (!apiKey) {
   console.error("✗ Missing API key for language:", langCode);
