@@ -26,7 +26,7 @@ const REDIRECT_URL = "/index.html";
 // Add Fuse.js configuration at the top with other configs
 const FUZZY_SEARCH_OPTIONS = {
   includeScore: true,
-  threshold: 0.1, // Allows for some typos/partial matches
+  threshold: 0.4, // Allows for some typos/partial matches
   ignoreLocation: true, // Look for matches anywhere in the string
   useExtendedSearch: true,
 };
