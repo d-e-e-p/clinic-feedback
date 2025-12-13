@@ -245,15 +245,14 @@ function fuzzyMatchText(text) {
 
     if (results.length > 0) {
       console.log("Fuzzy input:", text, " → Results:", results);
+      console.log("results.length = ", results.length , "results[0].score = ", results[0].score, "results.refIndex" = results.refIndex);
     }
 
     // Validate first result
     if (
       results.length > 0 &&
-      typeof results[0].score === "number" &&
       results[0].score <= FUZZY_SEARCH_OPTIONS.threshold
     ) {
-      console.log("returning: ", results.refIndex);
       return results.refIndex;
     }
     return null;
