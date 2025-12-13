@@ -26,7 +26,7 @@ const REDIRECT_URL = "/index.html";
 // Add Fuse.js configuration at the top with other configs
 const FUZZY_SEARCH_OPTIONS = {
   includeScore: true,
-  threshold: 0.2, // Allows for some typos/partial matches
+  threshold: 0.9, // Allows for some typos/partial matches
   ignoreLocation: true, // Look for matches anywhere in the string
   useExtendedSearch: true,
 };
@@ -246,14 +246,11 @@ function fuzzyMatchText(text) {
     if (results.length > 0) {
       console.log("Fuzzy input:", text, " → Results:", results);
       console.log("results.length = ", results.length , "results[0].score = ", results[0].score, "results.refIndex" = results.refIndex);
-    }
 
-    // Validate first result
-    if (
-      results.length > 0 &&
-      results[0].score <= FUZZY_SEARCH_OPTIONS.threshold
-    ) {
-      return results.refIndex;
+      //if (results[0].score <= FUZZY_SEARCH_OPTIONS.threshold) {
+      if (results[0].score <= 0.3) {
+        return results.refIndex;
+      }
     }
     return null;
   } catch (err) {
