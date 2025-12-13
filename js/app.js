@@ -263,6 +263,15 @@ function fuzzyMatchText(text) {
 // === UI ===
 function addCaptionEntry(speaker, text) {
   // look for something like:
+  const container = document.getElementById("captions-scroll");
+  console.log(`container ${container}`);
+  const entry = document.createElement("div");
+  entry.className = `caption-entry ${speaker}-caption`;
+  entry.textContent = `[${speaker.toUpperCase()}] ${text}`;
+  container.appendChild(entry);
+  // Auto-scroll to bottom
+  container.scrollTop = container.scrollHeight;
+
   const num = fuzzyMatchText(text);
   if (num != null) {
     // [Question 1](https://clinicfeedback.org/images/q1.png)
@@ -282,14 +291,6 @@ function addCaptionEntry(speaker, text) {
     imgContainer.style.display = "block";
     console.log(` imgContainer2: ${imgContainer}`);
   }
-
-  const container = document.getElementById("captions-scroll");
-  const entry = document.createElement("div");
-  entry.className = `caption-entry ${speaker}-caption`;
-  entry.textContent = `[${speaker.toUpperCase()}] ${text}`;
-  container.appendChild(entry);
-  // Auto-scroll to bottom
-  container.scrollTop = container.scrollHeight;
 }
 
 async function manualDisconnect() {
