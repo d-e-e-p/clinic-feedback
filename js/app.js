@@ -244,19 +244,13 @@ function fuzzyMatchText(text) {
     const results = fuse.search(text);
 
     if (results.length > 0) {
-      console.log("Fuzzy input:", text, " → Results:", results);
       console.log(
-        "results.length: ",
-        results.length,
-        "results[0].score: ",
-        results[0].score,
-        "results.refIndex: ",
-        results.refIndex,
+        `Fuzzy results → count: ${results.length}, score: ${results[0]?.score}, refIndex: ${results[0]?.refIndex}`,
       );
 
       //if (results[0].score <= FUZZY_SEARCH_OPTIONS.threshold) {
       if (results[0].score <= 0.3) {
-        return results.refIndex;
+        return results[0].refIndex;
       }
     }
     return null;
