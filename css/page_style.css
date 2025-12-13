@@ -138,7 +138,7 @@ button {
 #image-caption-container {
     position: fixed;
     bottom: 120px; /* Above disconnect button */
-    left: 50%;
+    left: 40%;
     transform: translateX(-50%);
     z-index: 4; /* Higher than controls */
     max-width: 80%;
