@@ -271,14 +271,16 @@ function addCaptionEntry(speaker, text) {
     console.log(`loading url ${url}`);
 
     // SHOW IMAGE
-    const imgContainer = document.getElementById("image-caption-container");
-    imgContainer.style.display = "block";
-    console.log(` imgContainer: ${imgContainer}`);
-
     const imgElement = document.getElementById("caption-image");
+    console.log(`loading image1 ${imgElement}`);
     imgElement.src = url;
     imgElement.alt = alt;
-    console.log(`loading image ${imgElement}`);
+    console.log(`loading image2 ${imgElement}`);
+
+    const imgContainer = document.getElementById("image-caption-container");
+    console.log(` imgContainer1: ${imgContainer}`);
+    imgContainer.style.display = "block";
+    console.log(` imgContainer2: ${imgContainer}`);
   }
 
   const container = document.getElementById("captions-scroll");
