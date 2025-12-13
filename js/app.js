@@ -264,21 +264,21 @@ function fuzzyMatchText(text) {
 function addCaptionEntry(speaker, text) {
   // look for something like:
   const num = fuzzyMatchText(text);
-  console.log("addCaptionEntry num: ", num);
-  if (num) {
+  if (num != null) {
     // [Question 1](https://clinicfeedback.org/images/q1.png)
     const alt = "question " + num;
     const url = "https://clinicfeedback.org/images/q" + num + ".png";
+    console.log(`loading url ${url}`);
 
     // SHOW IMAGE
     const imgContainer = document.getElementById("image-caption-container");
+    imgContainer.style.display = "block";
+    console.log(` imgContainer: ${imgContainer}`);
+
     const imgElement = document.getElementById("caption-image");
     imgElement.src = url;
     imgElement.alt = alt;
-    imgContainer.style.display = "block";
     console.log(`loading image ${imgElement}`);
-
-    return;
   }
 
   const container = document.getElementById("captions-scroll");
