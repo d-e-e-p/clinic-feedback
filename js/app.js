@@ -17,6 +17,7 @@ if (typeof Fuse === "undefined") {
 let scene, persona;
 let timerInterval;
 let sessionStartTime;
+let imgElement;
 
 // === CONFIG ===
 const SESSION_DURATION = 3 * 60 * 1000; // 3 minutes
@@ -264,6 +265,8 @@ function fuzzyMatchText(text) {
 function addCaptionEntry(speaker, text) {
   // look for something like:
   const container = document.getElementById("captions-scroll");
+  if (!container) return;
+
   console.log(`container ${container}`);
   const entry = document.createElement("div");
   entry.className = `caption-entry ${speaker}-caption`;
@@ -274,13 +277,17 @@ function addCaptionEntry(speaker, text) {
 
   const num = fuzzyMatchText(text);
   if (num != null) {
+    if (!imgElement) {
+      console.error("Image element not initialized");
+      return;
+    }
+
     // [Question 1](https://clinicfeedback.org/images/q1.png)
     const alt = "question " + num;
     const url = "https://clinicfeedback.org/images/q" + num + ".png";
     console.log(`loading url ${url}`);
 
     // SHOW IMAGE
-    const imgElement = document.getElementById("caption-image");
     console.log(`loading image1 ${imgElement}`);
     imgElement.src = url;
     imgElement.alt = alt;
@@ -303,6 +310,7 @@ async function manualDisconnect() {
 // === INIT ===
 document.addEventListener("DOMContentLoaded", () => {
   console.log("=== DOM READY ===");
+  imgElement = document.getElementById("caption-image");
   document
     .getElementById("disconnect-button")
     .addEventListener("click", manualDisconnect);
