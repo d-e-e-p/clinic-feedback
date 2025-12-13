@@ -277,11 +277,6 @@ function addCaptionEntry(speaker, text) {
 
   const num = fuzzyMatchText(text);
   if (num != null) {
-    if (!imgElement) {
-      console.error("Image element not initialized");
-      return;
-    }
-
     // [Question 1](https://clinicfeedback.org/images/q1.png)
     const alt = "question " + num;
     const url = "https://clinicfeedback.org/images/q" + num + ".png";
@@ -311,6 +306,9 @@ async function manualDisconnect() {
 document.addEventListener("DOMContentLoaded", () => {
   console.log("=== DOM READY ===");
   imgElement = document.getElementById("caption-image");
+  if (!imgElement) {
+    console.error("caption-image not found in DOM");
+  }
   document
     .getElementById("disconnect-button")
     .addEventListener("click", manualDisconnect);
