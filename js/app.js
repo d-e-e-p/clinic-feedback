@@ -279,7 +279,7 @@ function addCaptionEntry(speaker, text) {
   if (num != null) {
     // [Question 1](https://clinicfeedback.org/images/q1.png)
     const alt = "question " + num;
-    const url = "https://clinicfeedback.org/images/q" + num + ".png";
+    const url = "https://clinicfeedback.org/images/en_q" + num + ".png";
     console.log(`loading url ${url}`);
 
     // SHOW IMAGE
