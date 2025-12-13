@@ -245,7 +245,7 @@ function fuzzyMatchText(text) {
 
     if (results.length > 0) {
       console.log(
-        `Fuzzy results → count: ${results.length}, score: ${results[0]?.score}, refIndex: ${results[0]?.refIndex}`,
+        `Fuzzy results → count: ${results.length}, score: ${results[0].score}, refIndex: ${results[0].refIndex}`,
       );
 
       //if (results[0].score <= FUZZY_SEARCH_OPTIONS.threshold) {
