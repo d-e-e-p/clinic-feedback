@@ -17,7 +17,7 @@ const translationsMain = {
     code: "es",
     buttonText: "Comenzar",
     surveyLink: "/pages/es.html",
-    backgroundColor: "#2ecc71",
+    backgroundColor: "#f39c12",
     emoji: "🇪🇸",
   },
 
