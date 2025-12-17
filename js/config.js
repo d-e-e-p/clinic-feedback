@@ -8,13 +8,6 @@ const translationsMain = {
     surveyLink: "/pages/en.html",
     backgroundColor: "#368dda",
     emoji: "🇺🇸",
-    stages: [
-      "Thank you for visiting the clinic today.",
-      "First, how did you find your care services today?",
-      "How could we provide better services next time?",
-      "What do you like most about the Harvard Medicine Family Van?",
-      "Is there anything else you'd like to share with us?",
-    ],
   },
 
   spanish: {
@@ -26,15 +19,9 @@ const translationsMain = {
     surveyLink: "/pages/es.html",
     backgroundColor: "#2ecc71",
     emoji: "🇪🇸",
-    stages: [
-      "Gracias por visitar la clínica hoy.",
-      "Primero, ¿cómo encontró los servicios de atención hoy?",
-      "¿Cómo podríamos brindar mejores servicios la próxima vez?",
-      "¿Qué es lo que más le gusta de la Harvard Medicine Family Van?",
-      "¿Hay algo más que le gustaría compartir con nosotros?",
-    ],
   },
 
+  /*
   french: {
     name: "Français",
     title: "Avis de la Clinique",
@@ -44,15 +31,32 @@ const translationsMain = {
     surveyLink: "/pages/fr.html",
     backgroundColor: "#e74c3c",
     emoji: "🇫🇷",
-    stages: [
-      "Merci d'avoir visité la clinique aujourd'hui.",
-      "Tout d'abord, comment avez-vous trouvé vos services de soins aujourd'hui ?",
-      "Comment pourrions-nous offrir de meilleurs services la prochaine fois ?",
-      "Qu'appréciez-vous le plus dans le Harvard Medicine Family Van ?",
-      "Y a-t-il autre chose que vous aimeriez partager avec nous ?",
-    ],
+  },
+  */
+
+  creole: {
+    name: "Kreyòl Ayisyen",
+    title: "Opinyon Klinik la",
+    instruction: "Tanpri chwazi yon lang epi peze Kòmanse",
+    code: "ht",
+    buttonText: "Kòmanse",
+    surveyLink: "/pages/ht.html",
+    backgroundColor: "#1abc9c",
+    emoji: "🇭🇹",
   },
 
+  portuguese: {
+    name: "Português",
+    title: "Avaliação da Clínica",
+    instruction: "Por favor, selecione um idioma e pressione Iniciar",
+    code: "pt",
+    buttonText: "Iniciar",
+    surveyLink: "/pages/pt.html",
+    backgroundColor: "#27ae60",
+    emoji: "🇵🇹",
+  },
+
+  /*
   chinese: {
     name: "中文 (Zhōngwén)",
     title: "诊所反馈",
@@ -62,23 +66,19 @@ const translationsMain = {
     surveyLink: "/pages/zh.html",
     backgroundColor: "#f1c40f",
     emoji: "🇨🇳",
-    stages: [
-      "感谢您今天来访本诊所。",
-      "首先，您今天对我们的护理服务感觉如何？",
-      "下次我们怎样才能提供更好的服务？",
-      "您最喜欢哈佛医学院家庭车的哪些方面？",
-      "您还有什么想与我们分享的吗？",
-    ],
   },
+  */
 };
 
 // API Keys h
-const apiKeys = {
+const apiKeys_h = {
   en: "eyJzb3VsSWQiOiJkZG5hLWJhci1vZi1zb2FwNTY4Zi0tc3VydmV5MSIsImF1dGhTZXJ2ZXIiOiJodHRwczovL2RoLnNvdWxtYWNoaW5lcy5jbG91ZC9hcGkvand0IiwiYXV0aFRva2VuIjoiYXBpa2V5X3YxXzhkMjFmNTgxLTA4Y2UtNDJjNC1hYzkzLTZjZTUxMzFhNmRlOSJ9",
   es: "eyJzb3VsSWQiOiJkZG5hLWJhci1vZi1zb2FwNTY4Zi0tZmVlZGJhY2tlcyIsImF1dGhTZXJ2ZXIiOiJodHRwczovL2RoLnNvdWxtYWNoaW5lcy5jbG91ZC9hcGkvand0IiwiYXV0aFRva2VuIjoiYXBpa2V5X3YxX2U3ZDM2ZTgzLWVhMGItNGIzZi1hOGUwLTYyNTRlOGQ2ZmQxMCJ9",
   fr: "eyJzb3VsSWQiOiJkZG5hLWJhci1vZi1zb2FwNTY4Zi0tZmVlZGJhY2tmciIsImF1dGhTZXJ2ZXIiOiJodHRwczovL2RoLnNvdWxtYWNoaW5lcy5jbG91ZC9hcGkvand0IiwiYXV0aFRva2VuIjoiYXBpa2V5X3YxXzFkMjNjNzRlLTI3NmMtNGU2Ny1hMDJjLWEwNGJjMTVjYzhjNiJ9",
   zh: "eyJzb3VsSWQiOiJkZG5hLWJhci1vZi1zb2FwNTY4Zi0tZmVlZGJhY2t6aCIsImF1dGhTZXJ2ZXIiOiJodHRwczovL2RoLnNvdWxtYWNoaW5lcy5jbG91ZC9hcGkvand0IiwiYXV0aFRva2VuIjoiYXBpa2V5X3YxXzVlZGFiM2JlLWY1N2UtNGZjNC1iOWZkLWE1MWFiOWQ3NTUwNCJ9",
-  // en: "eyJzb3VsSWQiOiJkZG5hLWJhci1vZi1zb2FwNTY4Zi0tc3VydmV5MSIsImF1dGhTZXJ2ZXIiOiJodHRwczovL2RoLnNvdWxtYWNoaW5lcy5jbG91ZC9hcGkvand0IiwiYXV0aFRva2VuIjoiYXBpa2V5X3YxX2IyNTA0YzljLTY1OTctNDgyYy1hY2E3LTAwYmRiYmZhZDBjZSJ9",
+
+  // biol
+  // en: "eyJzb3VsSWQiOiJkZG5hLWJpby1saW1hcnktb3JnLS1mZWVkYmFja2VuIiwiYXV0aFNlcnZlciI6Imh0dHBzOi8vZGguc291bG1hY2hpbmVzLmNsb3VkL2FwaS9qd3QiLCJhdXRoVG9rZW4iOiJhcGlrZXlfdjFfMjY0ZDg3NjEtZDM1Ny00YjZlLTg5NTEtNzY3MGExMjZkMWZhIn0="
 };
 
 // API Keys m
@@ -89,3 +89,12 @@ const apiKeys_m = {
   zh: "eyJzb3VsSWQiOiJkZG5hLWJhci1vZi1zb2FwNTY4Zi0tZmVlZGJhY2t6aCIsImF1dGhTZXJ2ZXIiOiJodHRwczovL2RoLnNvdWxtYWNoaW5lcy5jbG91ZC9hcGkvand0IiwiYXV0aFRva2VuIjoiYXBpa2V5X3YxXzVlZGFiM2JlLWY1N2UtNGZjNC1iOWZkLWE1MWFiOWQ3NTUwNCJ9",
   //  en: "eyJzb3VsSWQiOiJkZG5hLWJhci1vZi1zb2FwNTY4Zi0tc3VydmV5MSIsImF1dGhTZXJ2ZXIiOiJodHRwczovL2RoLnNvdWxtYWNoaW5lcy5jbG91ZC9hcGkvand0IiwiYXV0aFRva2VuIjoiYXBpa2V5X3YxX2IyNTA0YzljLTY1OTctNDgyYy1hY2E3LTAwYmRiYmZhZDBjZSJ9",
 };
+
+const apiKeys_b = {
+  en: "eyJzb3VsSWQiOiJkZG5hLWJpby1saW1hcnktb3JnLS1mZWVkYmFja2VuIiwiYXV0aFNlcnZlciI6Imh0dHBzOi8vZGguc291bG1hY2hpbmVzLmNsb3VkL2FwaS9qd3QiLCJhdXRoVG9rZW4iOiJhcGlrZXlfdjFfMjY0ZDg3NjEtZDM1Ny00YjZlLTg5NTEtNzY3MGExMjZkMWZhIn0=",
+  es: "eyJzb3VsSWQiOiJkZG5hLWJpby1saW1hcnktb3JnLS1mZWVkYmFja2VzIiwiYXV0aFNlcnZlciI6Imh0dHBzOi8vZGguc291bG1hY2hpbmVzLmNsb3VkL2FwaS9qd3QiLCJhdXRoVG9rZW4iOiJhcGlrZXlfdjFfZmM5NTVmMmMtNTg0ZS00Nzk3LWFkY2ItMDYyZDYzNmFmNjExIn0=",
+  ht: "eyJzb3VsSWQiOiJkZG5hLWJpby1saW1hcnktb3JnLS1mZWVkYmFja2ZyIiwiYXV0aFNlcnZlciI6Imh0dHBzOi8vZGguc291bG1hY2hpbmVzLmNsb3VkL2FwaS9qd3QiLCJhdXRoVG9rZW4iOiJhcGlrZXlfdjFfNDRiN2YzMjktY2Y5YS00OGIzLTkxNTYtMzE5YzY0OTE3ZTlmIn0=",
+  pt: "eyJzb3VsSWQiOiJkZG5hLWJpby1saW1hcnktb3JnLS1mZWVkYmFja3B0IiwiYXV0aFNlcnZlciI6Imh0dHBzOi8vZGguc291bG1hY2hpbmVzLmNsb3VkL2FwaS9qd3QiLCJhdXRoVG9rZW4iOiJhcGlrZXlfdjFfMmVmMDAwNzgtMTk3YS00OWI3LWJhMzQtNDUzMjkxNGEwY2M3In0=",
+};
+
+const apiKeys = apiKeys_b;

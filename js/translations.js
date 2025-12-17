@@ -13,7 +13,7 @@ const translations = {
       userTalking: "listening",
     },
     stages: [
-      "Hello, Thank you for visiting the clinic today.",
+      "Thank you for visiting the clinic today.",
       "First, how did you find your care services today?",
       "How could we provide better services next time?",
       "What do you like most about the Harvard Medicine Family Van?",
@@ -84,6 +84,52 @@ const translations = {
       "下次我们怎样才能提供更好的服务？",
       "您最喜欢哈佛医学院家庭车的哪些方面？",
       "您还有什么想与我们分享的吗？",
+    ],
+  },
+
+  ht: {
+    page_title: "Opinyon Klinik la",
+    initializing: "Ap inisyalize...",
+    disconnect_button: "Fèmen Sesyon an",
+    thank_you_title: "Mèsi pou Opinyon Ou!",
+    session_ended_redirect: "Sesyon sa a fini. Nap redirije...",
+    timer_label: "Tan ki Rete",
+    conversation_state: {
+      // Tradiksyon teknik/UI pou eta konvèsasyon yo
+      idle: "ap koute", // 'Idle' / pa aktif
+      dpSpeaking: "ap pale", // 'Speaking'
+      dpProcessing: "ap trete", // 'Processing'
+      userTalking: "ap koute", // 'Listening'
+    },
+    stages: [
+      "Mèsi paske ou te vizite klinik la jodi a.",
+      "Anvan tout bagay, kijan ou te jwenn sèvis swen ou te resevwa jodi a?",
+      "Kijan nou ta ka bay pi bon sèvis pwochen fwa a?",
+      "Kisa ou pi renmen nan Harvard Medicine Family Van?",
+      "Èske gen lòt bagay ou ta renmen pataje avèk nou?",
+    ],
+  },
+
+  pt: {
+    page_title: "Comentários da Clínica",
+    initializing: "Inicializando...",
+    disconnect_button: "Encerrar Sessão",
+    thank_you_title: "Obrigado(a) pelos seus Comentários!",
+    session_ended_redirect: "Esta sessão foi encerrada. Redirecionando...",
+    timer_label: "Tempo Restante",
+    conversation_state: {
+      // Traduções técnicas/UI para estados da conversa
+      idle: "escutando", // 'Idle' / não ativo
+      dpSpeaking: "falando", // 'Speaking'
+      dpProcessing: "processando", // 'Processing'
+      userTalking: "escutando", // 'Listening'
+    },
+    stages: [
+      "Obrigado(a) por visitar a clínica hoje.",
+      "Primeiro, como você avaliaria os serviços de atendimento que recebeu hoje?",
+      "Como poderíamos oferecer melhores serviços da próxima vez?",
+      "O que você mais gosta no Harvard Medicine Family Van?",
+      "Há mais alguma coisa que você gostaria de compartilhar conosco?",
     ],
   },
 };
