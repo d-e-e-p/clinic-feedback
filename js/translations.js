@@ -35,9 +35,9 @@ const translations = {
       userTalking: "escuchando", // 'Listening'
     },
     stages: [
-      "Gracias por visitar la clínica hoy.",
-      "Primero, ¿cómo encontró los servicios de atención hoy?",
-      "¿Cómo podríamos brindar mejores servicios la próxima vez?",
+      "¡Gracias por visitar la Family Van hoy!",
+      "Primero, ¿cómo evaluaría los servicios de atención que recibió hoy?",
+      "¿Cómo podríamos ofrecer mejores servicios la próxima vez?",
       "¿Qué es lo que más le gusta de la Harvard Medicine Family Van?",
       "¿Hay algo más que le gustaría compartir con nosotros?",
     ],
@@ -102,7 +102,7 @@ const translations = {
       userTalking: "ap koute", // 'Listening'
     },
     stages: [
-      "Mèsi paske ou te vizite klinik la jodi a.",
+      "Mèsi paske ou te vizite Family Van jodi a!",
       "Anvan tout bagay, kijan ou te jwenn sèvis swen ou te resevwa jodi a?",
       "Kijan nou ta ka bay pi bon sèvis pwochen fwa a?",
       "Kisa ou pi renmen nan Harvard Medicine Family Van?",
@@ -125,10 +125,10 @@ const translations = {
       userTalking: "escutando", // 'Listening'
     },
     stages: [
-      "Obrigado(a) por visitar a clínica hoje.",
+      "Obrigado(a) por visitar a Family Van hoje!",
       "Primeiro, como você avaliaria os serviços de atendimento que recebeu hoje?",
-      "Como poderíamos oferecer melhores serviços da próxima vez?",
-      "O que você mais gosta no Harvard Medicine Family Van?",
+      "Como poderíamos oferecer serviços melhores da próxima vez?",
+      "O que você mais gosta na Harvard Medicine Family Van?",
       "Há mais alguma coisa que você gostaria de compartilhar conosco?",
     ],
   },
